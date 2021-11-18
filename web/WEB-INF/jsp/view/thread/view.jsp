@@ -22,6 +22,6 @@
 			</c:if>
 		</c:forEach><br/>
 		
-		<footer><a href="<c:url value="/"/>">Back to home page</a></footer>
+		<footer><a href="<c:url value="/sub/${subUrl }"/>">Return to the <c:out value="${subName }"/> Sub</a></footer>
 	</body>
 </html>

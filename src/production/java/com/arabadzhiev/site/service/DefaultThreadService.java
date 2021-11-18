@@ -28,6 +28,16 @@ public class DefaultThreadService implements ThreadService{
 	}
 	
 	@Override
+	public List<Thread> getThreadsForSub(String subUrl){
+		List<Thread> threads = new ArrayList<>();
+		for(Thread t : threadRepository.findBySubUrl(subUrl)) {
+			threads.add(t);
+		}
+		
+		return threads;
+	}
+	
+	@Override
 	public List<Thread> getAll() {
 		List<Thread> threads = new ArrayList<Thread>();
 		for(Thread thread : threadRepository.findAll()) {

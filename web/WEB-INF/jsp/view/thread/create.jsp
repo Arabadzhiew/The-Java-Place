@@ -18,9 +18,8 @@
 			<form:label path="body">Body:</form:label><br/>
 			<form:textarea path="body" rows="10" cols = "50"/><br/>
 			<form:errors path="body" cssClass="errors"/><br/><br/>
-			<input type="submit" value="Submit"/><br/><br/>
-			
-			<a href="<c:url value="/"/>">Back to home page</a>
-		</form:form>
+			<input type="submit" value="Submit"/><br/>
+		</form:form><br/>
+		<a href="<c:url value="/sub/${subUrl }"/>">Return to the <c:out value="${subName }"/> Sub</a>
 	</body>
 </html>

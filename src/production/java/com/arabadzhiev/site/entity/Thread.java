@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ public class Thread implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private long id;
+	private String subUrl;
 	private String title;
 	private String body;
 	private List<ThreadComment> comments = new ArrayList<>();
@@ -29,6 +31,13 @@ public class Thread implements Serializable{
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	@Column(name = "Sub_Url")
+	public String getSubUrl() {
+		return subUrl;
+	}
+	public void setSubUrl(String subUrl) {
+		this.subUrl = subUrl;
 	}
 	public String getTitle() {
 		return title;
