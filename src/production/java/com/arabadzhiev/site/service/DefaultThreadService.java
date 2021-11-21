@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.arabadzhiev.site.entity.Sub;
 import com.arabadzhiev.site.entity.Thread;
+import com.arabadzhiev.site.repository.SubRepository;
 import com.arabadzhiev.site.repository.ThreadRepository;
 
 @Service
@@ -15,10 +17,16 @@ import com.arabadzhiev.site.repository.ThreadRepository;
 public class DefaultThreadService implements ThreadService{
 	
 	@Autowired ThreadRepository threadRepository;
+	@Autowired SubRepository subRepository;
 	
 	@Override
 	public void persistThread(Thread thread) {
 		threadRepository.save(thread);
+		
+		Sub sub = subRepository.findByUrl(thread.getSubUrl());
+		sub.setTotalThreads(sub.getTotalThreads() + 1);
+		sub.setLastActiveThread(thread);
+		subRepository.save(sub);
 	}
 	
 	@Override
@@ -45,6 +53,11 @@ public class DefaultThreadService implements ThreadService{
 		}
 		
 		return threads;
+	}
+	
+	@Override
+	public void deleteThread(long id) {
+		threadRepository.deleteById(id);
 	}
 
 }

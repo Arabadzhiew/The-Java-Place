@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Sub implements Serializable{
@@ -26,6 +27,8 @@ public class Sub implements Serializable{
 	private long totalComments;
 	private LocalDateTime dateCreated;
 	private List<Thread> threads = new ArrayList<>();
+	private Thread lastActiveThread;
+	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,13 +73,21 @@ public class Sub implements Serializable{
 	public void setDateCreated(LocalDateTime dateCreated) {
 		this.dateCreated = dateCreated;
 	}
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "Sub_Url")
 	public List<Thread> getThreads() {
 		return threads;
 	}
 	public void setThreads(List<Thread> threads) {
 		this.threads = threads;
+	}
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "Thread_Id")
+	public Thread getLastActiveThread() {
+		return lastActiveThread;
+	}
+	public void setLastActiveThread(Thread lastActiveThread) {
+		this.lastActiveThread = lastActiveThread;
 	}
 
 }

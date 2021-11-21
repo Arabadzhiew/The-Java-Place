@@ -11,4 +11,5 @@ public interface ThreadService {
 	public Thread getThread(long id);
 	public List<Thread> getThreadsForSub(String subUrl);
 	public List<Thread> getAll();
+	public void deleteThread(long id);
 }

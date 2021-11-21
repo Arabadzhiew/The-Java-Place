@@ -17,11 +17,11 @@
 		
 		<c:forEach items="${comments }" var="c">
 			<h3>${c.body }</h3>
-			<c:if test="${c.dateCreated != nul }">
+			<c:if test="${c.dateCreated != null }">
 				<i>Commented at: </i><b>${c.dateCreated }</b><br/>
 			</c:if>
 		</c:forEach><br/>
 		
-		<footer><a href="<c:url value="/sub/${subUrl }"/>">Return to the <c:out value="${subName }"/> Sub</a></footer>
+		<footer><a href="<c:url value="/sub/${sub.url }"/>">Return to the <c:out value="${sub.name }"/> Sub</a></footer>
 	</body>
 </html>

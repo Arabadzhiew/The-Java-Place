@@ -1,6 +1,7 @@
 package com.arabadzhiev.site.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -22,6 +22,8 @@ public class Thread implements Serializable{
 	private String subUrl;
 	private String title;
 	private String body;
+	private int commentCount;
+	private LocalDateTime dateCreated;
 	private List<ThreadComment> comments = new ArrayList<>();
 	
 	@Id
@@ -51,8 +53,21 @@ public class Thread implements Serializable{
 	public void setBody(String body) {
 		this.body = body;
 	}
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "Thread_Id")
+	@Column(name = "Comment_Count", insertable = false)
+	public int getCommentCount() {
+		return commentCount;
+	}
+	public void setCommentCount(int commentCount) {
+		this.commentCount = commentCount;
+	}
+	@Column(name = "Date_Created", insertable = false, updatable = false)
+	public LocalDateTime getDateCreated() {
+		return dateCreated;
+	}
+	public void setDateCreated(LocalDateTime dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+	@OneToMany(mappedBy = "thread", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	public List<ThreadComment> getComments() {
 		return comments;
 	}

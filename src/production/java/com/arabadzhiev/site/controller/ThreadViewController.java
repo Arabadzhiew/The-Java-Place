@@ -18,6 +18,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.arabadzhiev.site.entity.Thread;
 import com.arabadzhiev.site.entity.ThreadComment;
 import com.arabadzhiev.site.service.SubService;
+import com.arabadzhiev.site.service.ThreadCommentService;
 import com.arabadzhiev.site.service.ThreadService;
 
 @Controller
@@ -25,20 +26,25 @@ import com.arabadzhiev.site.service.ThreadService;
 public class ThreadViewController {
 	
 	@Autowired ThreadService threadService;
+	@Autowired ThreadCommentService commentService;
 	@Autowired SubService subService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String viewThread(Map<String, Object> model, @Param("id") long id, 
+	public ModelAndView viewThread(Map<String, Object> model, @Param("id") long id, 
 			@PathVariable("subUrl") String subUrl) {
-		model.put("subUrl", subUrl);
-		model.put("subName", subService.getSub(subUrl).getName());
 		
 		Thread thread = threadService.getThread(id);
+		String threadSubUrl = thread.getSubUrl();
+		model.put("sub", subService.getSub(threadSubUrl));
 		model.put("thread", thread);
 		model.put("comments", thread.getComments());
 		model.put("commentForm", new CommentForm());
 		
-		return "thread/view";
+		if(!threadSubUrl.equals(subUrl)) {
+			return new ModelAndView(new RedirectView("/sub/"+threadSubUrl+"/thread/view?id="+id, true));
+		}
+		
+		return new ModelAndView("thread/view");
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
@@ -56,10 +62,9 @@ public class ThreadViewController {
 		}
 		
 		ThreadComment comment = new ThreadComment();
-		comment.setThreadId(id);
+		comment.setThread(thread);
 		comment.setBody(commentForm.getBody());
-		thread.addComment(comment);
-		threadService.persistThread(thread);
+		commentService.persistComment(comment);
 		
 		return new ModelAndView(new RedirectView("/sub/"+subUrl+"/thread/view?id=" + id + "&commented", true));
 	}
