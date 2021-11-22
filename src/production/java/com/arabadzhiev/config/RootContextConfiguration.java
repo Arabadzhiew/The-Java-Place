@@ -11,6 +11,7 @@ import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -33,6 +34,7 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
 		basePackages = "com.arabadzhiev.site",
 		excludeFilters = @ComponentScan.Filter(Controller.class)
 )
+@Import({SecurityConfiguration.class})
 public class RootContextConfiguration {
 	
 	@Bean
