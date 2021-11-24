@@ -13,6 +13,18 @@
 				padding: 10px;
 			}
 		</style>
+		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+		<script type="text/javascript" lang="javascript">
+        	var logout = function(url) {
+            	var form = $('<form method="post"></form>')
+            		.attr({action: url});
+            	form.append($('<input type="hidden">').attr({
+            		name: '${_csrf.parameterName}', value: '${_csrf.token}'
+            	}));
+            	$('body').append(form);
+            	form.submit();
+        	};
+		</script>
 	</head>
 	
 	<body>
@@ -46,6 +58,7 @@
 					</tr>
 				</c:forEach>
 			</table>
+			<a href="javascript:void 0;" onclick="logout('<c:url value="/logout"/>');">Log out</a>
 		</div>
 	</body>
 </html>

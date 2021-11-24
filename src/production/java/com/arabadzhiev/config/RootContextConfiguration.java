@@ -24,7 +24,9 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 @Configuration
-@EnableTransactionManagement(mode = AdviceMode.PROXY, proxyTargetClass = false)
+@EnableTransactionManagement(order = 1,
+		mode = AdviceMode.PROXY, proxyTargetClass = false
+)
 @EnableJpaRepositories(
 		basePackages = "com.arabadzhiev.site.repository",
 		entityManagerFactoryRef = "entityManagerFactoryBean",
