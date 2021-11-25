@@ -55,6 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity security) throws Exception{
 		security
 			.authorizeRequests()
+				.antMatchers("/signup").anonymous()
 				.antMatchers("/sub/**/thread/delete", "/sub/**/thread/edit").hasAuthority("ADMIN")
 				.anyRequest().authenticated()
 			.and().formLogin()
@@ -69,7 +70,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.permitAll()
 			.and().sessionManagement()
 				.sessionFixation().changeSessionId()
-				.maximumSessions(2).maxSessionsPreventsLogin(true)
+				.maximumSessions(20).maxSessionsPreventsLogin(true)
 				.sessionRegistry(this.sessionRegistryImpl());
 	}
 }

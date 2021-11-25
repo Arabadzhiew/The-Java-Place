@@ -22,7 +22,7 @@
 				<tr>
 					<th><c:out value="${subName }"/> :: Threads</th>
 					<th>Comments</th>
-					<security:authorize url="/sub/${subUrl }/thread/edit">
+					<security:authorize access="hasAuthority('ADMIN')">
 						<th>Actions</th>
 					</security:authorize>
 				</tr>
@@ -32,7 +32,7 @@
 							<a href="<c:url value="/sub/${subUrl }/thread/view?id=${t.id }"/>"><c:out value="${t.title }"/></a>
 						</td>
 						<td><c:out value="${t.commentCount }"/></td>
-						<security:authorize url="/sub/${subUrl }/thread/edit">
+						<security:authorize access="hasAuthority('ADMIN')">
 							<td>
 								<a href="<c:url value="/sub/${subUrl }/thread/edit?id=${t.id }"/>">Edit</a>&nbsp;|
 								<form action="<c:url value="/sub/${subUrl }/thread/delete?id=${t.id }"/>" method="post">

@@ -11,6 +11,7 @@
 			<form:label path="password">Password: </form:label><br/>
 			<form:password path="password"/><br/>
 			<input type="submit" value="Log In"/>
-		</form:form>
+		</form:form><br/>
+		Not registered yet?&nbsp;<a href="<c:url value="/signup"/>">Sign Up</a>
 	</body>
 </html>

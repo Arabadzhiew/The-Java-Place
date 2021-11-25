@@ -95,7 +95,7 @@ public class User implements UserDetails, CredentialsContainer{
 			new String(this.getHashedPassword(), StandardCharsets.UTF_8);
 	}
 	@Override
-	@Column(name = "Account_Non_Expired")
+	@Column(name = "Account_Non_Expired", insertable = false)
 	public boolean isAccountNonExpired() {
 		return this.accountNonExpired;
 	}
@@ -103,7 +103,7 @@ public class User implements UserDetails, CredentialsContainer{
 		this.accountNonExpired = accountNonExpired;
 	}
 	@Override
-	@Column(name = "Account_Non_Locked")
+	@Column(name = "Account_Non_Locked", insertable = false)
 	public boolean isAccountNonLocked() {
 		return this.accountNonLocked;
 	}
@@ -111,7 +111,7 @@ public class User implements UserDetails, CredentialsContainer{
 		this.accountNonLocked = accountNonLocked;
 	}
 	@Override
-	@Column(name = "Credentials_Non_Expired")
+	@Column(name = "Credentials_Non_Expired", insertable = false)
 	public boolean isCredentialsNonExpired() {
 		return this.credentialsNonExpired;
 	}
@@ -119,7 +119,7 @@ public class User implements UserDetails, CredentialsContainer{
 		this.credentialsNonExpired = credentialsNonExpired;
 	}
 	@Override
-	@Column(name = "Enabled")
+	@Column(name = "Enabled", insertable = false)
 	public boolean isEnabled() {
 		return this.enabled;
 	}
