@@ -2,6 +2,9 @@ package com.arabadzhiev.site.service;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
+
 import com.arabadzhiev.site.entity.Thread;
 
 public interface ThreadService {
@@ -11,5 +14,6 @@ public interface ThreadService {
 	public Thread getThread(long id);
 	public List<Thread> getThreadsForSub(String subUrl);
 	public List<Thread> getAll();
-	public void deleteThread(long id);
+	@PreAuthorize("#thread.user.username == authentication.name")
+	public void deleteThread(@P("thread")Thread thread);
 }

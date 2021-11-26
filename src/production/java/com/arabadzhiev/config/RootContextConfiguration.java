@@ -61,6 +61,7 @@ public class RootContextConfiguration {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
 		Map<String, Object> properties = new Hashtable<>();
 		properties.put("javax.persistence.schema-generation.database.action", "none");
+		properties.put("hibernate.show_sql", "true");
 		HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
 		adapter.setDatabasePlatform("org.hibernate.dialect.MySQL8Dialect");
 		

@@ -113,7 +113,7 @@ public class ThreadController {
 	
 	@RequestMapping(value = "delete", method = RequestMethod.POST)
 	public RedirectView deleteThread(@Param("id") long id, @PathVariable("subUrl") String subUrl) {
-		threadService.deleteThread(id);
+		threadService.deleteThread(threadService.getThread(id));
 		return new RedirectView("/sub/"+subUrl+"?deleted="+id, true);
 	}
 	

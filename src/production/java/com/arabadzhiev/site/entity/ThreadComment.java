@@ -1,5 +1,6 @@
 package com.arabadzhiev.site.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -14,7 +15,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Thread_Comment")
-public class ThreadComment {
+public class ThreadComment implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	private long id;
 	private String body;
 	private LocalDateTime dateCreated;

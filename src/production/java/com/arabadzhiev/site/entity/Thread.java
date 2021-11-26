@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -24,6 +26,7 @@ public class Thread implements Serializable{
 	private String body;
 	private int commentCount;
 	private LocalDateTime dateCreated;
+	private User user;
 	private List<ThreadComment> comments = new ArrayList<>();
 	
 	@Id
@@ -66,6 +69,14 @@ public class Thread implements Serializable{
 	}
 	public void setDateCreated(LocalDateTime dateCreated) {
 		this.dateCreated = dateCreated;
+	}
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "User_Id")
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	@OneToMany(mappedBy = "thread", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	public List<ThreadComment> getComments() {

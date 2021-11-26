@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +12,7 @@ import com.arabadzhiev.site.entity.Sub;
 import com.arabadzhiev.site.entity.Thread;
 import com.arabadzhiev.site.repository.SubRepository;
 import com.arabadzhiev.site.repository.ThreadRepository;
+import com.arabadzhiev.site.repository.UserRepository;
 
 @Service
 @Transactional
@@ -18,9 +20,11 @@ public class DefaultThreadService implements ThreadService{
 	
 	@Autowired ThreadRepository threadRepository;
 	@Autowired SubRepository subRepository;
+	@Autowired UserRepository userRepository;
 	
 	@Override
 	public void persistThread(Thread thread) {
+		thread.setUser(userRepository.getByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
 		threadRepository.save(thread);
 		
 		Sub sub = subRepository.findByUrl(thread.getSubUrl());
@@ -56,8 +60,11 @@ public class DefaultThreadService implements ThreadService{
 	}
 	
 	@Override
-	public void deleteThread(long id) {
-		threadRepository.deleteById(id);
+	public void deleteThread(Thread thread) {
+		Sub sub = subRepository.findByUrl(thread.getSubUrl());
+		System.out.println(sub.getThreads().size());
+		
+		threadRepository.delete(thread);
 	}
 
 }

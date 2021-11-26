@@ -38,6 +38,7 @@
 								<form action="<c:url value="/sub/${subUrl }/thread/delete?id=${t.id }"/>" method="post">
 									<input type="submit" value="Delete" 
 									onclick="return confirm('Are you sure you want to delete thread with Id = ${t.id }?')"/>
+									<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 								</form>
 							</td>
 						</security:authorize>
