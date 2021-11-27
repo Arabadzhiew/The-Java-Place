@@ -46,6 +46,7 @@ public class ThreadController {
 		model.put("sub", subService.getSub(subUrl));
 		
 		if(errors.hasErrors()) {
+			model.put("action", "create");
 			return new ModelAndView("thread/threadForm");
 		}
 		Thread thread = new Thread();

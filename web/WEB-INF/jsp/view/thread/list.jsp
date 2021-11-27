@@ -1,23 +1,5 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title><c:out value="${subName }"/> :: Threads</title>
-		<style type="text/css">
-			table, tr{
-				border: 1px solid #000000;
-				border-collapse: collapse;
-			}
-			td, th{
-				border: 1px solid #000000;
-				padding: 10px;
-			}
-			form{
-				display: inline;
-			}
-		</style>
-	</head>
-	<body>
-		<div align="center">
+<template:main title="${subName } :: Threads">
+	<div align="center">
 			<table>
 				<tr>
 					<th><c:out value="${subName }"/> :: Threads</th>
@@ -35,11 +17,7 @@
 						<security:authorize access="hasAuthority('ADMIN')">
 							<td>
 								<a href="<c:url value="/sub/${subUrl }/thread/edit?id=${t.id }"/>">Edit</a>&nbsp;|
-								<form action="<c:url value="/sub/${subUrl }/thread/delete?id=${t.id }"/>" method="post">
-									<input type="submit" value="Delete" 
-									onclick="return confirm('Are you sure you want to delete thread with Id = ${t.id }?')"/>
-									<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
-								</form>
+								<a href="javascript:void 0;" onclick="deleteThread('<c:url value="/sub/${t.sub.url }/thread/delete?id=${t.id }"/>', ${t.id }, '${_csrf.token }');">Delete</a>
 							</td>
 						</security:authorize>
 					</tr>
@@ -50,5 +28,4 @@
 				<a href="<c:url value="/"/>">Back to home page</a>
 			</footer>
 		</div>
-	</body>
-</html>
+</template:main>

@@ -1,0 +1,11 @@
+@charset "UTF-8";
+a:hover{
+	color: #71b800;
+}
+a{
+	color : #070;
+	text-decoration: none;
+}
+.errors{
+	color: #d11313;
+}

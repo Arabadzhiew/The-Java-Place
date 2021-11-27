@@ -2,11 +2,7 @@
 <html>
 	<head>
 		<title>Sign Up</title>
-		<style type="text/css">
-			.errors{
-				color: #d11313;
-			}
-		</style>
+		<link rel="stylesheet" href="<c:url value="/resources/css/login.css"/>">
 	</head>
 	<body>
 		<h2>Sing Up</h2>

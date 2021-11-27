@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>Log In</title>
+		<link rel="stylesheet" href="<c:url value="/resources/css/login.css"/>">
 	</head>
 	<body>
 		<h2>Log In</h2>

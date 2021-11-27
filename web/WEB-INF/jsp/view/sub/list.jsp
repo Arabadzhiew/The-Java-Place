@@ -1,34 +1,5 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>Home Page</title>
-		<style type="text/css">
-			table,
-			tr{
-				border: 1px solid black;
-				border-collapse: collapse;
-			}
-			td, th{
-				border: 1px solid black;
-				padding: 10px;
-			}
-		</style>
-		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-		<script type="text/javascript" lang="javascript">
-        	var logout = function(url) {
-            	var form = $('<form method="post"></form>')
-            		.attr({action: url});
-            	form.append($('<input type="hidden">').attr({
-            		name: '${_csrf.parameterName}', value: '${_csrf.token}'
-            	}));
-            	$('body').append(form);
-            	form.submit();
-        	};
-		</script>
-	</head>
-	
-	<body>
-		<div align="center">
+<template:main title="Subs">
+	<div align="center">
 			<h1>Subs</h1>
 			<table>
 				<tr>
@@ -58,7 +29,5 @@
 					</tr>
 				</c:forEach>
 			</table>
-			<a href="javascript:void 0;" onclick="logout('<c:url value="/logout"/>');">Log out</a>
 		</div>
-	</body>
-</html>
+</template:main>

@@ -1,0 +1,19 @@
+@charset "UTF-8";
+table, tr{
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+td, th{
+	border: 1px solid black;
+	padding: 10px;
+}
+a:hover{
+	color: #71b800;
+}
+a{
+	color : #070;
+	text-decoration: none;
+}
+.errors{
+	color: #d11313;
+}
