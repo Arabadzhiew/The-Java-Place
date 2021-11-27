@@ -23,14 +23,19 @@ public class DefaultThreadService implements ThreadService{
 	@Autowired UserRepository userRepository;
 	
 	@Override
-	public void persistThread(Thread thread) {
+	public void createThread(Thread thread) {
 		thread.setUser(userRepository.getByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
 		threadRepository.save(thread);
 		
-		Sub sub = subRepository.findByUrl(thread.getSubUrl());
+		Sub sub = subRepository.findByUrl(thread.getSub().getUrl());
 		sub.setTotalThreads(sub.getTotalThreads() + 1);
 		sub.setLastActiveThread(thread);
 		subRepository.save(sub);
+	}
+	
+	@Override
+	public void updateThread(Thread thread) {
+		threadRepository.save(thread);
 	}
 	
 	@Override
@@ -61,10 +66,18 @@ public class DefaultThreadService implements ThreadService{
 	
 	@Override
 	public void deleteThread(Thread thread) {
-		Sub sub = subRepository.findByUrl(thread.getSubUrl());
-		System.out.println(sub.getThreads().size());
 		
+		Sub sub = thread.getSub();
+		Thread lastActive = sub.getLastActiveThread();
+		if(thread.equals(lastActive)) {
+			sub.setLastActiveThread(sub.getThreads().get(sub.getThreads().size()-2));
+		}
+		sub.removeThread(thread);
+		sub.setTotalThreads(sub.getTotalThreads() - 1);
+		
+		subRepository.save(sub);
 		threadRepository.delete(thread);
+		
 	}
 
 }

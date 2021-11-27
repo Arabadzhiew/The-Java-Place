@@ -13,13 +13,15 @@
 		<h2>${thread.title }</h2>
 		<i>By : ${thread.user.username }</i><br/>
 		<p>${thread.body }</p><br/><br/>
-		<form method="post"
-			action="<c:url value="/sub/${thread.subUrl }/thread/delete?id=${thread.id }"/>">
-			<input type="submit" value="Delete" 
-				onclick="return confirm('Are you sure you want to delete thread with Id = ${thread.id}');"/>
-			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
-		</form>
-		<a href="<c:url value="/sub/${thread.subUrl }/thread/edit?id=${thread.id }"/>">Edit</a><br/><br/>
+		<security:authorize access="#thread.user.username == authentication.name or hasAuthority('ADMIN')">
+			<form method="post"
+				action="<c:url value="/sub/${thread.sub.url }/thread/delete?id=${thread.id }"/>">
+				<input type="submit" value="Delete" 
+					onclick="return confirm('Are you sure you want to delete thread with Id = ${thread.id}');"/>
+				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+			</form>
+			<a href="<c:url value="/sub/${thread.sub.url }/thread/edit?id=${thread.id }"/>">Edit</a><br/><br/>
+		</security:authorize>
 		
 		<form:form method="post" modelAttribute="commentForm">
 			<form:label path="body">Comment:</form:label><br/><br/>

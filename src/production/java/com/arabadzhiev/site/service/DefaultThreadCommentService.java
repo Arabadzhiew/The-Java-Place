@@ -31,7 +31,7 @@ public class DefaultThreadCommentService implements ThreadCommentService{
 		threadRepository.save(thread);
 		
 		
-		Sub sub = subRepository.findByUrl(comment.getThread().getSubUrl());
+		Sub sub = subRepository.findByUrl(comment.getThread().getSub().getUrl());
 		sub.setTotalComments(sub.getTotalComments() + 1);
 		sub.setLastActiveThread(comment.getThread());
 		

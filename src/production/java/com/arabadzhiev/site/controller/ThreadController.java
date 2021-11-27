@@ -51,9 +51,9 @@ public class ThreadController {
 		Thread thread = new Thread();
 		thread.setTitle(threadForm.getTitle());
 		thread.setBody(threadForm.getBody());
-		thread.setSubUrl(subUrl);
+		thread.setSub(subService.getSub(subUrl));
 		
-		threadService.persistThread(thread);
+		threadService.createThread(thread);
 		
 		return new ModelAndView(new RedirectView("/sub/"+subUrl+"/thread/view?id=" + thread.getId(), true));
 	}
@@ -62,7 +62,7 @@ public class ThreadController {
 			@PathVariable("subUrl") String subUrl) {
 		
 		Thread thread = threadService.getThread(id);
-		String threadSubUrl = thread.getSubUrl();
+		String threadSubUrl = thread.getSub().getUrl();
 		model.put("sub", subService.getSub(threadSubUrl));
 		model.put("thread", thread);
 		model.put("comments", thread.getComments());
@@ -106,14 +106,15 @@ public class ThreadController {
 		
 		thread.setTitle(threadForm.getTitle());
 		thread.setBody(threadForm.getBody());
-		threadService.persistThread(thread);
+		threadService.updateThread(thread);
 		
 		return new ModelAndView(new RedirectView("/sub/"+subUrl, true));
 	}
 	
 	@RequestMapping(value = "delete", method = RequestMethod.POST)
 	public RedirectView deleteThread(@Param("id") long id, @PathVariable("subUrl") String subUrl) {
-		threadService.deleteThread(threadService.getThread(id));
+		Thread thread = threadService.getThread(id);
+		threadService.deleteThread(thread);
 		return new RedirectView("/sub/"+subUrl+"?deleted="+id, true);
 	}
 	

@@ -2,8 +2,8 @@ package com.arabadzhiev.site.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,7 +26,7 @@ public class Sub implements Serializable{
 	private long totalThreads;
 	private long totalComments;
 	private LocalDateTime dateCreated;
-	private Set<Thread> threads = new HashSet<>();
+	private List<Thread> threads = new ArrayList<>();
 	private Thread lastActiveThread;
 	
 	
@@ -73,13 +73,15 @@ public class Sub implements Serializable{
 	public void setDateCreated(LocalDateTime dateCreated) {
 		this.dateCreated = dateCreated;
 	}
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "Sub_Url")
-	public Set<Thread> getThreads() {
+	@OneToMany(mappedBy = "sub", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	public List<Thread> getThreads() {
 		return threads;
 	}
-	public void setThreads(Set<Thread> threads) {
+	public void setThreads(List<Thread> threads) {
 		this.threads = threads;
+	}
+	public void removeThread(Thread thread) {
+		this.threads.remove(thread);
 	}
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Thread_Id")

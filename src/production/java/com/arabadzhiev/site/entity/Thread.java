@@ -2,8 +2,8 @@ package com.arabadzhiev.site.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,13 +21,13 @@ public class Thread implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private long id;
-	private String subUrl;
 	private String title;
 	private String body;
 	private int commentCount;
 	private LocalDateTime dateCreated;
+	private Sub sub;
 	private User user;
-	private List<ThreadComment> comments = new ArrayList<>();
+	private Set<ThreadComment> comments = new HashSet<>();
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,13 +36,6 @@ public class Thread implements Serializable{
 	}
 	public void setId(long id) {
 		this.id = id;
-	}
-	@Column(name = "Sub_Url")
-	public String getSubUrl() {
-		return subUrl;
-	}
-	public void setSubUrl(String subUrl) {
-		this.subUrl = subUrl;
 	}
 	public String getTitle() {
 		return title;
@@ -70,6 +63,14 @@ public class Thread implements Serializable{
 	public void setDateCreated(LocalDateTime dateCreated) {
 		this.dateCreated = dateCreated;
 	}
+	@ManyToOne
+	@JoinColumn(name = "Sub_Url", referencedColumnName = "Url")
+	public Sub getSub() {
+		return sub;
+	}
+	public void setSub(Sub sub) {
+		this.sub = sub;
+	}
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "User_Id")
 	public User getUser() {
@@ -79,10 +80,10 @@ public class Thread implements Serializable{
 		this.user = user;
 	}
 	@OneToMany(mappedBy = "thread", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	public List<ThreadComment> getComments() {
+	public Set<ThreadComment> getComments() {
 		return comments;
 	}
-	public void setComments(List<ThreadComment> comments) {
+	public void setComments(Set<ThreadComment> comments) {
 		this.comments = comments;
 	}
 	
@@ -90,5 +91,9 @@ public class Thread implements Serializable{
 		this.comments.add(comment);
 	}
 	
+	@Override
+	public boolean equals(Object other) {
+		return ((Thread)other).getId() == this.id ? true : false;
+	}
 	
 }
