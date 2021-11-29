@@ -22,6 +22,7 @@ public class ThreadComment implements Serializable{
 	private String body;
 	private LocalDateTime dateCreated;
 	private Thread thread;
+	private User user;
 	
 	
 	@Id
@@ -52,6 +53,14 @@ public class ThreadComment implements Serializable{
 	}
 	public void setThread(Thread thread) {
 		this.thread = thread;
+	}
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "User_Id")
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 }

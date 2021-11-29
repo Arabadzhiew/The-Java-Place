@@ -74,6 +74,7 @@ public class DefaultThreadService implements ThreadService{
 		}
 		sub.removeThread(thread);
 		sub.setTotalThreads(sub.getTotalThreads() - 1);
+		sub.setTotalComments(sub.getTotalComments() - thread.getCommentCount());
 		
 		subRepository.save(sub);
 		threadRepository.delete(thread);

@@ -13,3 +13,9 @@ var deleteThread = function(url, id, csrfToken){
 		postInvisibleForm(url, csrfToken);
      }
 };
+
+var deleteComment = function(url, csrfToken){
+	if(confirm("Are you sure you want to delete this comment")){
+		postInvisibleForm(url, csrfToken)
+	}
+}

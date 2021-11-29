@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import com.arabadzhiev.site.entity.ThreadComment;
 import com.arabadzhiev.site.service.SubService;
 import com.arabadzhiev.site.service.ThreadCommentService;
 import com.arabadzhiev.site.service.ThreadService;
+import com.arabadzhiev.site.service.UserService;
 
 @Controller
 @RequestMapping("sub/{subUrl}/thread")
@@ -28,6 +30,7 @@ public class ThreadController {
 	@Autowired ThreadService threadService;
 	@Autowired ThreadCommentService commentService;
 	@Autowired SubService subService;
+	@Autowired UserService userService;
 	
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String createThread(Map<String, Object> model, @PathVariable("subUrl") String subUrl) {
@@ -135,10 +138,20 @@ public class ThreadController {
 		
 		ThreadComment comment = new ThreadComment();
 		comment.setThread(thread);
+		comment.setUser(userService.loadUserByUsername(
+				SecurityContextHolder.getContext().getAuthentication().getName()));
 		comment.setBody(commentForm.getBody());
 		commentService.persistComment(comment);
 		
 		return new ModelAndView(new RedirectView("/sub/"+subUrl+"/thread/view?id=" + id + "&commented", true));
+	}
+	
+	@RequestMapping(value = "comment/delete", method = RequestMethod.POST)
+	public RedirectView deleteComment(@Param("id") long id , @Param("commentId") long commentId,
+			@PathVariable("subUrl") String subUrl) {
+		commentService.deleteComment(commentService.getComment(commentId));
+		
+		return new RedirectView("/sub/"+subUrl+"/thread/view?id="+id, true);
 	}
 	
 	

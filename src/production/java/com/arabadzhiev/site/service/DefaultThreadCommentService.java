@@ -37,5 +37,25 @@ public class DefaultThreadCommentService implements ThreadCommentService{
 		
 		subRepository.save(sub);
 	}
+	
+	@Override
+	public ThreadComment getComment(long id) {
+		return commentRepository.findById(id).get();
+	}
+	
+	@Override
+	public void deleteComment(ThreadComment comment) {
+		Thread thread = comment.getThread();
+		Sub sub = thread.getSub();
+		thread.setCommentCount(thread.getCommentCount() - 1);
+		thread.getComments().remove(comment);
+		sub.setTotalComments(sub.getTotalComments() - 1);
+		
+		subRepository.save(sub);
+		threadRepository.save(thread);
+		
+		commentRepository.delete(comment);
+		
+	}
 
 }
