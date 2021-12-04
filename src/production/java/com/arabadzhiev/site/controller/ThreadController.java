@@ -71,7 +71,7 @@ public class ThreadController {
 		model.put("thread", thread);
 		model.put("comments", thread.getComments());
 		model.put("commentForm", new CommentForm());
-		
+		model.put("commentEditForm", new CommentForm());		
 		if(!threadSubUrl.equals(subUrl)) {
 			return new ModelAndView(new RedirectView("/sub/"+threadSubUrl+"/thread/view?id="+id, true));
 		}
@@ -144,6 +144,15 @@ public class ThreadController {
 		commentService.persistComment(comment);
 		
 		return new ModelAndView(new RedirectView("/sub/"+subUrl+"/thread/view?id=" + id + "&commented", true));
+	}
+	
+	@RequestMapping(value="comment/edit", method = RequestMethod.POST)
+	public RedirectView editComment(@Param("id") long id, @PathVariable("subUrl") String subUrl,
+			CommentForm commentEditForm) {
+		ThreadComment comment = commentService.getComment(id);
+		comment.setBody(commentEditForm.getBody());
+		commentService.editComment(comment);
+		return new RedirectView("/sub/"+subUrl+"/thread/view?id="+comment.getThread().getId(), true);
 	}
 	
 	@RequestMapping(value = "comment/delete", method = RequestMethod.POST)

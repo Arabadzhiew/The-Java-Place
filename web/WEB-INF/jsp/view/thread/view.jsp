@@ -1,4 +1,5 @@
 <template:main title="${thread.title }">
+	<script src="<c:url value="/resources/js/utility.js"/>"></script>
 	<h2>${thread.title }</h2>
 	<i>By : ${thread.user.username }</i><br/>
 	<p>${thread.body }</p><br/><br/>
@@ -16,8 +17,17 @@
 	</form:form>
 		
 	<c:forEach items="${comments }" var="c">
-		<h3>${c.body }</h3>
-		<i>Commented by: ${c.user.username }</i><br/>
+		<h3 id="comment-${c.id }">${c.body }</h3>
+		<div id="cmntDiv-${c.id }"></div>
+		<security:authorize access="#c.user.username == authentication.name" var="ownComment"/>
+		<c:choose>
+			<c:when test="${ownComment}">
+				<i>Commented by: you</i><br/>
+			</c:when>
+			<c:otherwise>
+				<i>Commented by: ${c.user.username }</i><br/>
+			</c:otherwise>
+		</c:choose>
 		<c:if test="${c.dateCreated != null }">
 			<i>At: </i><b>${c.dateCreated }</b><br/>
 		</c:if>
@@ -25,9 +35,11 @@
 			<a href="javascript:void 0;" 
 				onclick="deleteComment('<c:url value="/sub/${thread.sub.url }/thread/comment/delete?id=${thread.id }&commentId=${c.id }"/>', '${_csrf.token }')">
 				Delete
-			</a>
+			</a>&nbsp;
+			<a id="editHref-${c.id }" href="javascript:void 0;" onclick="editForm('${c.id}', '${c.body }', '${_csrf.token }')">Edit</a>
 		</security:authorize>
 	</c:forEach><br/><br/>
+	
 		
 	<footer><a href="<c:url value="/sub/${sub.url }"/>">Return to the <c:out value="${sub.name }"/> Sub</a></footer>
 </template:main>

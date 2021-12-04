@@ -12,6 +12,8 @@ public interface ThreadCommentService {
 	public void persistComment(@NotNull(message = "Internal error: null comment") ThreadComment comment);
 	public ThreadComment getComment(long id);
 	@PreAuthorize("#comment.user.username == authentication.name or hasAuthority('ADMIN')")
+	public void editComment(@P("comment")ThreadComment comment);
+	@PreAuthorize("#comment.user.username == authentication.name or hasAuthority('ADMIN')")
 	public void deleteComment(@NotNull(message = "Internal error: null comment") 
 		@P("comment")ThreadComment comment);
 

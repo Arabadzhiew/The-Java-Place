@@ -44,6 +44,11 @@ public class DefaultThreadCommentService implements ThreadCommentService{
 	}
 	
 	@Override
+	public void editComment(ThreadComment comment) {
+		commentRepository.save(comment);
+	}
+	
+	@Override
 	public void deleteComment(ThreadComment comment) {
 		Thread thread = comment.getThread();
 		Sub sub = thread.getSub();
