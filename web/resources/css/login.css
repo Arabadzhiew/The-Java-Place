@@ -1,4 +1,7 @@
 @charset "UTF-8";
+html{
+	font: caption;
+}
 a:hover{
 	color: #71b800;
 }

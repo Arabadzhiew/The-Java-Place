@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,10 +28,12 @@ import com.arabadzhiev.site.service.UserService;
 @RequestMapping("sub/{subUrl}/thread")
 public class ThreadController {
 	
-	@Autowired ThreadService threadService;
-	@Autowired ThreadCommentService commentService;
-	@Autowired SubService subService;
-	@Autowired UserService userService;
+	@Autowired private ThreadService threadService;
+	@Autowired private ThreadCommentService commentService;
+	@Autowired private SubService subService;
+	@Autowired private UserService userService;
+	
+	@Autowired private SessionRegistry sessionRegistry;
 	
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String createThread(Map<String, Object> model, @PathVariable("subUrl") String subUrl) {
@@ -38,6 +41,8 @@ public class ThreadController {
 		model.put("sub", subService.getSub(subUrl));
 		model.put("threadForm", new ThreadForm());
 		model.put("action", "create");
+		model.put("usersOnline", sessionRegistry.getAllPrincipals().size());
+		model.put("userCount", userService.getCount());
 		
 		return "thread/threadForm";
 	}
@@ -71,7 +76,9 @@ public class ThreadController {
 		model.put("thread", thread);
 		model.put("comments", thread.getComments());
 		model.put("commentForm", new CommentForm());
-		model.put("commentEditForm", new CommentForm());		
+		model.put("commentEditForm", new CommentForm());
+		model.put("usersOnline", sessionRegistry.getAllPrincipals().size());
+		model.put("userCount", userService.getCount());
 		if(!threadSubUrl.equals(subUrl)) {
 			return new ModelAndView(new RedirectView("/sub/"+threadSubUrl+"/thread/view?id="+id, true));
 		}
@@ -91,6 +98,8 @@ public class ThreadController {
 		model.put("sub", subService.getSub(subUrl));
 		model.put("threadForm", threadForm);
 		model.put("action", "edit");
+		model.put("usersOnline", sessionRegistry.getAllPrincipals().size());
+		model.put("userCount", userService.getCount());
 		
 		return new ModelAndView("thread/threadForm");
 	}

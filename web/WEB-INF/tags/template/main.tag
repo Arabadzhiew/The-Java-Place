@@ -7,11 +7,11 @@
 	<head>
 		<title><c:out value="${title }"/></title>
 		<link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>"/>
-		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 		<script src="<c:url value="/resources/js/forms.js"/>"></script>
         	
 	</head>
 	<body>
+		<h3>Online: ${usersOnline }/${userCount }</h3>
 		<a href="javascript:void 0;" onclick="postInvisibleForm('<c:url value="/logout"/>', '${_csrf.token }');">
 			Log Out
 		</a>

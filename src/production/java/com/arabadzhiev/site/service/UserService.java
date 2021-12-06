@@ -13,5 +13,6 @@ public interface UserService extends UserDetailsService{
 	public User loadUserByUsername(String username);
 	public void persistUser(@NotNull(message = "The user entity cannot be null.")User user,
 							@NotBlank(message = "The password field cannot be blank")String password);
+	public long getCount();
 
 }

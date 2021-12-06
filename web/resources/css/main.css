@@ -1,4 +1,7 @@
-@charset "UTF-8";
+body{
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	font-size: 13px;
+}
 table, tr{
 	border: 1px solid black;
 	border-collapse: collapse;

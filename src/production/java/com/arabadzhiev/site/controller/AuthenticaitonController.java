@@ -9,6 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,16 @@ public class AuthenticaitonController {
 		if(SecurityContextHolder.getContext().getAuthentication() instanceof UsernamePasswordAuthenticationToken) {
 			return new ModelAndView(new RedirectView("/", true));
 		}
+		model.put("loginForm", new LoginForm());
+		return new ModelAndView("login");
+	}
+	
+	@RequestMapping(value = "login", method = RequestMethod.GET, params= {"error"})
+	public ModelAndView login(Map<String, Object> model, @Param("error") String error) {
+		if(SecurityContextHolder.getContext().getAuthentication() instanceof UsernamePasswordAuthenticationToken) {
+			return new ModelAndView(new RedirectView("/", true));
+		}
+		model.put("error", "");
 		model.put("loginForm", new LoginForm());
 		return new ModelAndView("login");
 	}

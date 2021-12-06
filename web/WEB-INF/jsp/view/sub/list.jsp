@@ -1,5 +1,6 @@
 <template:main title="Subs">
 	<div align="center">
+			<h1>Welcome, <security:authentication property="principal.username"/>!</h1>
 			<h1>Subs</h1>
 			<table>
 				<tr>

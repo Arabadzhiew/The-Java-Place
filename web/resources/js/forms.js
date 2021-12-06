@@ -1,11 +1,16 @@
 var postInvisibleForm = function(url, csrfToken) {
-	var form = $('<form method="post"></form>')
-		.attr({action: url});
-	form.append($('<input type="hidden">').attr({
-		name: '_csrf', value: csrfToken
-    }));
-	$('body').append(form);
-    form.submit();
+	var form = document.createElement("form");
+	form.setAttribute("method", "post");
+	form.setAttribute("action", url);
+	
+	var csrf = document.createElement("input");
+	csrf.setAttribute("type", "hidden");
+	csrf.setAttribute("name", "_csrf");
+	csrf.setAttribute("value", csrfToken)
+	
+	form.appendChild(csrf);
+	document.body.appendChild(form);
+	form.submit();
 };
         	
 var deleteThread = function(url, id, csrfToken){

@@ -37,5 +37,10 @@ public class DefaultUserService implements UserService{
 		this.userRepository.save(user);
 		
 	}
+	
+	@Override 
+	public long getCount() {
+		return this.userRepository.count();
+	}
 
 }
