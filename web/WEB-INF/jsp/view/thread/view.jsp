@@ -1,5 +1,4 @@
 <template:main title="${thread.title }">
-	<script src="<c:url value="/resources/js/utility.js"/>"></script>
 	<h2>${thread.title }</h2>
 	<i>By : ${thread.user.username }</i><br/>
 	<p>${thread.body }</p><br/><br/>

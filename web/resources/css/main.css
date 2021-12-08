@@ -17,6 +17,13 @@ a{
 	color : #070;
 	text-decoration: none;
 }
+.newThreadHref:hover{
+	color: #cc5400;
+}
+.newThreadHref{
+	color : #da0202;
+	text-decoration: underline;
+}
 .errors{
 	color: #d11313;
 }

@@ -36,5 +36,23 @@ function editForm(id, text, csrfToken){
 		document.getElementById("cmntDiv-"+id).appendChild(form);
 		document.getElementById("editHref-"+id).innerHTML = "Back";
 	}
+}
+
+function getTime(){
+	var date = new Date();
 	
+	return format(date.getHours())+":"+format(date.getMinutes())+":"+format(date.getSeconds());
+}
+
+function setServerTime(){
+	document.getElementById("serverTime").innerText = getTime();
+	setTimeout(setServerTime, 1000);
+}
+
+function format(timeValue){
+	if(timeValue < 10){
+		return "0"+timeValue;
+	}else{
+		return ""+timeValue;
+	}
 }
