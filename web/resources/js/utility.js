@@ -23,6 +23,7 @@ function editForm(id, text, csrfToken){
 		var submit = document.createElement("input");
 		submit.setAttribute("type", "submit");
 		submit.setAttribute("value", "Edit");
+		submit.setAttribute("class", "btn btn-outline-primary");
 		var csrf = document.createElement("input");
 		csrf.setAttribute("type", "hidden");
 		csrf.setAttribute("name", "_csrf");
@@ -35,6 +36,43 @@ function editForm(id, text, csrfToken){
 		
 		document.getElementById("cmntDiv-"+id).appendChild(form);
 		document.getElementById("editHref-"+id).innerHTML = "Back";
+	}
+}
+
+function commentForm(id, csrfToken){
+	
+	if(document.getElementById("commentForm") != null){
+		var form = document.getElementById("commentForm");
+		form.parentElement.removeChild(form)
+		document.getElementById("commentHref").innerHTML = "Comment";
+	}else{
+		var form = document.createElement("form");
+		form.setAttribute("id", "commentForm");
+		form.setAttribute("method", "post");
+		form.setAttribute("action", "/tjp/sub/faq/thread/view?id="+id);
+		
+		var br = document.createElement("br");
+		var comment = document.createElement("textarea");
+		comment.setAttribute("id", "body");
+		comment.setAttribute("name", "body");
+		comment.setAttribute("rows", 10);
+		comment.setAttribute("cols", 50);
+		var submit = document.createElement("input");
+		submit.setAttribute("type", "submit");
+		submit.setAttribute("value", "Comment");
+		submit.setAttribute("class", "btn btn-outline-primary");
+		var csrf = document.createElement("input");
+		csrf.setAttribute("type", "hidden");
+		csrf.setAttribute("name", "_csrf");
+		csrf.setAttribute("value", csrfToken);
+	
+		form.appendChild(comment);
+		form.appendChild(br.cloneNode(false));
+		form.appendChild(submit);
+		form.appendChild(csrf);
+		
+		document.getElementById("commentDiv").appendChild(form);
+		document.getElementById("commentHref").innerHTML = "Back";
 	}
 }
 

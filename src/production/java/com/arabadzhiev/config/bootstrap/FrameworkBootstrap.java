@@ -19,6 +19,7 @@ public class FrameworkBootstrap implements WebApplicationInitializer{
 	@Override
 	public void onStartup(ServletContext container) throws ServletException {
 		container.getServletRegistration("default").addMapping("/resources/*");
+		container.getServletRegistration("default").addMapping("/favicon.ico");
 		
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
 		rootContext.register(RootContextConfiguration.class);

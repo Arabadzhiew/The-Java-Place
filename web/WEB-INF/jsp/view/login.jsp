@@ -1,23 +1,21 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>Log In</title>
-		<link rel="stylesheet" href="<c:url value="/resources/css/login.css"/>">
-	</head>
-	<body>
-		<h2>Log In</h2>
+<template:unauthenticated title="Log In">
+	<div class="p-5">
+		<h2>Log In</h2><br/>
 		<form:form method="post" modelAttribute="loginForm">
-			<form:label path="username">Username: </form:label><br/>
-			<form:input path="username"/><br/>
-			<form:errors path="username" cssClass="errors"/><br/>
-			<form:label path="password">Password: </form:label><br/>
-			<form:password path="password"/><br/>
-			<form:errors path="password" cssClass="errors"/><br/>
-			<input type="submit" value="Log In"/>
+			<form:input class="form-control input-lg" path="username" placeholder="Username"/><br/>
+			<form:password class="form-control input-lg" path="password" placeholder="Password"/><br/>
+			<input class="btn btn-primary w-100" type="submit" value="Log In"/>
 			<c:if test="${error != null }">
-				<br/><br/><b class="errors">The username and password you entered do not match.</b>
+				<div align="center">
+					<br/><b class="errors">The username and password you entered do not match.</b>
+				</div>
 			</c:if>
 		</form:form><br/>
-		Not registered yet?&nbsp;<a href="<c:url value="/signup"/>">Sign Up</a>
-	</body>
-</html>
+		<div class="border-bottom" align="center">
+			<a class="text-decoration-none">Forgot your password?</a><br/><br/>
+		</div><br/>
+		<div align="center">
+			<a class="btn btn-success" href="<c:url value="/signup"/>">Create New Account</a>
+		</div>
+	</div>
+</template:unauthenticated>

@@ -1,28 +1,29 @@
 <template:main title="Create Thread">
-	<c:choose>
-		<c:when test="${action == 'create' }">
-			<h2>Create Thread</h2>
-		</c:when>
-		<c:otherwise>
-			<h2>Edit Thread</h2>
-		</c:otherwise>
-	</c:choose>
-		
-	<form:form metohd="post" modelAttribute="threadForm"><br/>
-		<form:label path="title">Title:</form:label><br/>
-		<form:input path="title"/><br/>
-		<form:errors path="title" cssClass="errors"/><br/><br/>
-		<form:label path="body">Body:</form:label><br/>
-		<form:textarea path="body" rows="10" cols = "50"/><br/>
-		<form:errors path="body" cssClass="errors"/><br/><br/>
+	<div class="px-5">
+		<a class="link-primary text-decoration-none" 
+		href="<c:url value="/sub/${sub.url }"/>"><c:out value="${sub.name }"/></a><br/><br/>
 		<c:choose>
 			<c:when test="${action == 'create' }">
-				<input type="submit" value="Create"/><br/>
+				<h2>Create Thread</h2>
 			</c:when>
 			<c:otherwise>
-				<input type="submit" value="Edit"/><br/>
+				<h2>Edit Thread</h2>
 			</c:otherwise>
 		</c:choose>
-		</form:form><br/>
-	<a href="<c:url value="/sub/${sub.url }"/>">Return to the <c:out value="${sub.name }"/> Sub</a>
+		
+		<form:form metohd="post" modelAttribute="threadForm"><br/>
+			<form:input class="form-control" path="title" placeholder="Title"/><br/>
+			<form:errors path="title" cssClass="errors"/><br/><br/>
+			<form:textarea class="form-control" path="body" placeholder="Text (optional)" rows="10"/><br/>
+			<form:errors path="body" cssClass="errors"/><br/><br/>
+			<c:choose>
+				<c:when test="${action == 'create' }">
+				<input class="btn btn-outline-primary" type="submit" value="Create"/><br/>
+				</c:when>
+					<c:otherwise>
+						<input class="btn btn-outline-primary" type="submit" value="Edit"/><br/>
+					</c:otherwise>
+			</c:choose>
+			</form:form><br/>
+	</div>
 </template:main>

@@ -18,17 +18,14 @@
 							<td><c:out value="${t.commentCount }"/></td>
 							<security:authorize access="hasAuthority('ADMIN')">
 								<td>
-									<a href="<c:url value="/sub/${subUrl }/thread/edit?id=${t.id }"/>">Edit</a>&nbsp;|
-									<a href="javascript:void 0;" onclick="deleteThread('<c:url value="/sub/${t.sub.url }/thread/delete?id=${t.id }"/>', ${t.id }, '${_csrf.token }');">Delete</a>
+									<a class="link text-decoration-none" href="<c:url value="/sub/${subUrl }/thread/edit?id=${t.id }"/>">Edit</a>&nbsp;
+									<a class="link-danger text-decoration-none" href="javascript:void 0;" onclick="deleteThread('<c:url value="/sub/${t.sub.url }/thread/delete?id=${t.id }"/>', ${t.id }, '${_csrf.token }');">Delete</a>
 								</td>
 							</security:authorize>
 						</tr>
 					</c:forEach>
 				</table>
+				<a class="btn btn-outline-secondary w-100" href="<c:url value="/sub/${subUrl }/thread/create"/>">Create Thread</a><br/><br/>
 			</div><br/>
-			<footer>
-				<a href="<c:url value="/sub/${subUrl }/thread/create"/>">Create Thread</a><br/><br/>
-				<a href="<c:url value="/"/>">Back to home page</a>
-			</footer>
 		</div>
 </template:main>
