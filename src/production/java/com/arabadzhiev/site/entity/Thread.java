@@ -2,7 +2,9 @@ package com.arabadzhiev.site.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -27,7 +29,7 @@ public class Thread implements Serializable{
 	private LocalDateTime dateCreated;
 	private Sub sub;
 	private User user;
-	private Set<ThreadComment> comments = new HashSet<>();
+	private List<ThreadComment> comments = new ArrayList<>();
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -80,10 +82,10 @@ public class Thread implements Serializable{
 		this.user = user;
 	}
 	@OneToMany(mappedBy = "thread", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	public Set<ThreadComment> getComments() {
+	public List<ThreadComment> getComments() {
 		return comments;
 	}
-	public void setComments(Set<ThreadComment> comments) {
+	public void setComments(List<ThreadComment> comments) {
 		this.comments = comments;
 	}
 	

@@ -6,7 +6,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
@@ -55,6 +57,8 @@ public class ThreadController {
 		
 		if(errors.hasErrors()) {
 			model.put("action", "create");
+			model.put("usersOnline", sessionRegistry.getAllPrincipals().size());
+			model.put("userCount", userService.getCount());
 			return new ModelAndView("thread/threadForm");
 		}
 		Thread thread = new Thread();
@@ -68,13 +72,14 @@ public class ThreadController {
 	}
 	@RequestMapping(value = "view", method = RequestMethod.GET)
 	public ModelAndView viewThread(Map<String, Object> model, @Param("id") long id, 
-			@PathVariable("subUrl") String subUrl) {
+			@PathVariable("subUrl") String subUrl, 
+			@PageableDefault(size = 10)Pageable page) {
 		
 		Thread thread = threadService.getThread(id);
 		String threadSubUrl = thread.getSub().getUrl();
 		model.put("sub", subService.getSub(threadSubUrl));
 		model.put("thread", thread);
-		model.put("comments", thread.getComments());
+		model.put("comments", commentService.getComments(thread, page));
 		model.put("commentForm", new CommentForm());
 		model.put("commentEditForm", new CommentForm());
 		model.put("usersOnline", sessionRegistry.getAllPrincipals().size());

@@ -17,7 +17,7 @@
 				<div id="commentDiv"></div><br/>
 			</div><br/><br/>
 		
-			<c:forEach items="${comments }" var="c">
+			<c:forEach items="${comments.content }" var="c">
 				<div class="border-bottom">
 					<h3 id="comment-${c.id }">${c.body }</h3>
 					<div id="cmntDiv-${c.id }"></div>
@@ -43,6 +43,11 @@
 						
 					</security:authorize>
 				</div><br/>
+			</c:forEach>
+		</div>
+		<div class="pb-3" align="center">
+			<c:forEach begin="1" end="${comments.totalPages }" var="p">
+				<a class="btn btn-sm btn-outline-primary" href="<c:url value="/sub/${sub.url }/thread/view?id=${thread .id}&paging.page=${p }&paging.size=${comments.size }"/>">${p }</a>
 			</c:forEach>
 		</div>
 	</div>

@@ -13,9 +13,9 @@
 		
 		<form:form metohd="post" modelAttribute="threadForm"><br/>
 			<form:input class="form-control" path="title" placeholder="Title"/><br/>
-			<form:errors path="title" cssClass="errors"/><br/><br/>
+			<form:errors class="text-danger" path="title"/><br/><br/>
 			<form:textarea class="form-control" path="body" placeholder="Text (optional)" rows="10"/><br/>
-			<form:errors path="body" cssClass="errors"/><br/><br/>
+			<form:errors class="text-danger" path="body"/><br/><br/>
 			<c:choose>
 				<c:when test="${action == 'create' }">
 				<input class="btn btn-outline-primary" type="submit" value="Create"/><br/>
