@@ -82,6 +82,7 @@ public class ThreadController {
 		model.put("comments", commentService.getComments(thread, page));
 		model.put("commentForm", new CommentForm());
 		model.put("commentEditForm", new CommentForm());
+		model.put("usersOnlineList", sessionRegistry.getAllPrincipals());
 		model.put("usersOnline", sessionRegistry.getAllPrincipals().size());
 		model.put("userCount", userService.getCount());
 		if(!threadSubUrl.equals(subUrl)) {

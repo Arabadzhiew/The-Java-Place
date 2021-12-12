@@ -56,7 +56,7 @@ public class WebServletContextConfiguration implements WebMvcConfigurer{
 	
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-		Sort defaultSort = Sort.by(Direction.ASC, "id");
+		Sort defaultSort = Sort.by(Direction.DESC, "id");
 		Pageable defaultPageable = PageRequest.of(0, 10, defaultSort);
 		
 		SortHandlerMethodArgumentResolver sortResolver = new SortHandlerMethodArgumentResolver();

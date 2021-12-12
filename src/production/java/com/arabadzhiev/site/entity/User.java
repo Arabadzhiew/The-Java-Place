@@ -28,6 +28,7 @@ public class User implements UserDetails, CredentialsContainer{
 	private String username;
 	private byte[] hashedPassword;
 	private String email;
+	private String role;
 	private LocalDateTime dateCreated;
 	private Set<UserAuthority> authorities = new HashSet<>();
 	private boolean accountNonExpired;
@@ -62,6 +63,12 @@ public class User implements UserDetails, CredentialsContainer{
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 	@Column(name = "Date_Created", insertable = false, updatable = false)
 	public LocalDateTime getDateCreated() {

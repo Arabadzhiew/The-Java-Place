@@ -1,4 +1,4 @@
-function editForm(id, text, csrfToken){
+function editForm(id, csrfToken){
 	
 	if(document.getElementById("comment-"+id).style.display == "none"){
 		var form = document.getElementById("commentEditForm");
@@ -19,7 +19,7 @@ function editForm(id, text, csrfToken){
 		comment.setAttribute("name", "body");
 		comment.setAttribute("rows", 10);
 		comment.setAttribute("cols", 50);
-		comment.append(text);
+		comment.append(document.getElementById("comment-"+id).innerText);
 		var submit = document.createElement("input");
 		submit.setAttribute("type", "submit");
 		submit.setAttribute("value", "Edit");
