@@ -1,5 +1,7 @@
 package com.arabadzhiev.site.service;
 
+import java.time.LocalDateTime;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,11 @@ import org.springframework.stereotype.Service;
 import com.arabadzhiev.site.entity.Sub;
 import com.arabadzhiev.site.entity.Thread;
 import com.arabadzhiev.site.entity.ThreadComment;
+import com.arabadzhiev.site.entity.User;
 import com.arabadzhiev.site.repository.SubRepository;
 import com.arabadzhiev.site.repository.ThreadCommentRepository;
 import com.arabadzhiev.site.repository.ThreadRepository;
+import com.arabadzhiev.site.repository.UserRepository;
 
 
 @Service
@@ -22,10 +26,13 @@ public class DefaultThreadCommentService implements ThreadCommentService{
 	@Autowired private ThreadCommentRepository commentRepository;
 	@Autowired private ThreadRepository threadRepository;
 	@Autowired private SubRepository subRepository;
+	@Autowired private UserRepository userRepository;
 	
 	@Override
 	public void persistComment(ThreadComment comment) {
-		
+		User user = comment.getUser();
+		user.setLastActive(LocalDateTime.now());
+		userRepository.save(user);
 		commentRepository.save(comment);
 		
 		Thread thread = comment.getThread();
@@ -51,7 +58,15 @@ public class DefaultThreadCommentService implements ThreadCommentService{
 	}
 	
 	@Override
+	public  Page<ThreadComment> getComments(User user, Pageable pageable){
+		return commentRepository.findByUser(user, pageable);
+	}
+	
+	@Override
 	public void editComment(ThreadComment comment) {
+		User user = comment.getUser();
+		user.setLastActive(LocalDateTime.now());
+		userRepository.save(user);
 		commentRepository.save(comment);
 	}
 	

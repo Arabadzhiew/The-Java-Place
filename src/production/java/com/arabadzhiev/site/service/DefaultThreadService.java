@@ -1,15 +1,19 @@
 package com.arabadzhiev.site.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.arabadzhiev.site.entity.Sub;
 import com.arabadzhiev.site.entity.Thread;
+import com.arabadzhiev.site.entity.User;
 import com.arabadzhiev.site.repository.SubRepository;
 import com.arabadzhiev.site.repository.ThreadRepository;
 import com.arabadzhiev.site.repository.UserRepository;
@@ -24,7 +28,11 @@ public class DefaultThreadService implements ThreadService{
 	
 	@Override
 	public void createThread(Thread thread) {
-		thread.setUser(userRepository.getByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+		User user = userRepository.getByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		user.setLastActive(LocalDateTime.now());
+		userRepository.save(user);
+		
+		thread.setUser(user);
 		threadRepository.save(thread);
 		
 		Sub sub = subRepository.findByUrl(thread.getSub().getUrl());
@@ -35,6 +43,10 @@ public class DefaultThreadService implements ThreadService{
 	
 	@Override
 	public void updateThread(Thread thread) {
+		User user = thread.getUser();
+		user.setLastActive(LocalDateTime.now());
+		userRepository.save(user);
+		
 		threadRepository.save(thread);
 	}
 	
@@ -62,6 +74,11 @@ public class DefaultThreadService implements ThreadService{
 		}
 		
 		return threads;
+	}
+	
+	@Override
+	public Page<Thread> getByUser(User user, Pageable pageable){
+		return threadRepository.findByUser(user, pageable);
 	}
 	
 	@Override

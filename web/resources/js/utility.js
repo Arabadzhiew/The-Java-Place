@@ -94,3 +94,13 @@ function format(timeValue){
 		return ""+timeValue;
 	}
 }
+
+function lastActive(lastActive){
+	if(lastActive == 0){
+		document.getElementById("lastActive").innerHTML = "Last active: today";
+	}else if(lastActive == 1){
+		document.getElementById("lastActive").innerHTML = "Last active: 1 day ago";
+	}else{
+		document.getElementById("lastActive").innerHTML = "Last active: " + lastActive +  " days ago";
+	}
+}

@@ -30,6 +30,7 @@ public class User implements UserDetails, CredentialsContainer{
 	private String email;
 	private String role;
 	private LocalDateTime dateCreated;
+	private LocalDateTime lastActive;
 	private Set<UserAuthority> authorities = new HashSet<>();
 	private boolean accountNonExpired;
 	private boolean accountNonLocked;
@@ -76,6 +77,13 @@ public class User implements UserDetails, CredentialsContainer{
 	}
 	public void setDateCreated(LocalDateTime dateCreated) {
 		this.dateCreated = dateCreated;
+	}
+	@Column(name = "Last_Active")
+	public LocalDateTime getLastActive() {
+		return lastActive;
+	}
+	public void setLastActive(LocalDateTime lastActive) {
+		this.lastActive = lastActive;
 	}
 	
 	//SECURITY

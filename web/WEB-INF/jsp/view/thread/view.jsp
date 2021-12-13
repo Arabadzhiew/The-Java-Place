@@ -8,16 +8,11 @@
 							<h2>${thread.title }</h2>
 							<p>${thread.body }</p><br/>
 						</div>
-						<div class="col-2 pb-3 border rounded" align="center">
+						<div class="col-2 pb-3 border rounded bg-light" align="center">
 							<security:authorize access="#thread.user.username == authentication.name" var="ownComment"/>
-							<c:choose>
-								<c:when test="${ownComment}">
-										<a class="link-dark text-decoration-none" href="javascript:void 0;">${thread.user.username } (you)</a>
-								</c:when>
-								<c:otherwise>
-									<a class="link-dark text-decoration-none" href="javascript:void 0;">${thread.user.username }</a>
-								</c:otherwise>
-							</c:choose>
+								<a class="link-dark text-decoration-none" href="<c:url value="/user/${thread.user.username }"/>">${thread.user.username }
+									<c:if test="${ownComment }">(you)</c:if>
+								</a>
 							<c:choose>
 								<c:when test="${thread.user.role.equals('User')}">
 									<p class="text-secondary">User</p>
@@ -70,16 +65,11 @@
 							<p id="comment-${c.id }" style="white-space: pre-line;">${c.body }</p>
 							<div id="cmntDiv-${c.id }" ></div>
 						</div>
-						<div class="col-2 pb-3 border rounded" align="center">
+						<div class="col-2 pb-3 border rounded bg-light" align="center">
 							<security:authorize access="#c.user.username == authentication.name" var="ownComment"/>
-							<c:choose>
-								<c:when test="${ownComment}">
-										<a class="link-dark text-decoration-none" href="javascript:void 0;">${c.user.username } (you)</a>
-								</c:when>
-								<c:otherwise>
-									<a class="link-dark text-decoration-none" href="javascript:void 0;">${c.user.username }</a>
-								</c:otherwise>
-							</c:choose>
+							<a class="link-dark text-decoration-none" href="<c:url value="/user/${c.user.username }"/>">${c.user.username }
+								<c:if test="${ownComment }">(you)</c:if>
+							</a>
 							<c:choose>
 								<c:when test="${c.user.role.equals('User')}">
 									<p class="text-secondary">User</p>

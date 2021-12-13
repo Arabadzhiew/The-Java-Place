@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.SortHandlerMethodArgumentResolver;
 import org.springframework.stereotype.Controller;
@@ -56,14 +55,14 @@ public class WebServletContextConfiguration implements WebMvcConfigurer{
 	
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-		Sort defaultSort = Sort.by(Direction.DESC, "id");
+		Sort defaultSort = Sort.by(Sort.Direction.DESC, "id");
 		Pageable defaultPageable = PageRequest.of(0, 10, defaultSort);
 		
 		SortHandlerMethodArgumentResolver sortResolver = new SortHandlerMethodArgumentResolver();
-		sortResolver.setFallbackSort(defaultSort);
 		sortResolver.setSortParameter("paging.sort");
+		sortResolver.setFallbackSort(defaultSort);
 		
-		PageableHandlerMethodArgumentResolver pageableResolver = new PageableHandlerMethodArgumentResolver();
+		PageableHandlerMethodArgumentResolver pageableResolver = new PageableHandlerMethodArgumentResolver(sortResolver);
 		pageableResolver.setMaxPageSize(100);
 		pageableResolver.setOneIndexedParameters(true);
 		pageableResolver.setPrefix("paging.");
