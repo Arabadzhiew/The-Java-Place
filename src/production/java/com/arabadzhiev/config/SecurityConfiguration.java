@@ -67,6 +67,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.logoutUrl("/logout").logoutSuccessUrl("/login?loggedOut")
 				.invalidateHttpSession(true).deleteCookies("JSESSIONID")
 				.permitAll()
+			.and()
+				.requiresChannel().antMatchers("/**").requiresSecure()
 			.and().sessionManagement()
 				.sessionFixation().changeSessionId()
 				.maximumSessions(20).maxSessionsPreventsLogin(true)
