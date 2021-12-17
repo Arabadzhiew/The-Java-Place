@@ -14,7 +14,7 @@
 	</head>
 	<body class="bg-light bg-gradient" onload="setServerTime();">
 		<div class="d-flex p-2 justify-content-between align-items-baseline">
-			<div class="d-flex flex-column">
+			<div class="d-flex flex-column align-self-start">
 				<div class="d-flex justify-content-between">
 					<div class="text-muted" id="serverTime"></div>
 					<div class="text-muted">Online: ${usersOnline }/${userCount }</div>
@@ -24,9 +24,16 @@
 					width="200" height="110"/>
 				</a>
 			</div>
-			<a href="javascript:void 0;" class="btn btn-outline-danger" onclick="postInvisibleForm('<c:url value="/logout"/>', '${_csrf.token }');">
-			Log Out
-			</a>
+			<div class="d-flex flex-column flex-fill align-self-start px-5">
+				<form:form class="form-inline" modelAttribute="searchForm" method="get" action ="/tjp/search/threads">
+					<form:input class="form-control" path="query" placeholder="Search for threads"/>
+				</form:form>
+			</div>
+			<div class="d-flex flex-column align-self-start">
+				<a href="javascript:void 0;" class="btn btn-outline-danger" onclick="postInvisibleForm('<c:url value="/logout"/>', '${_csrf.token }');">
+				Log Out
+				</a>
+			</div>
 		</div><br/>
 		<jsp:doBody/>
 	</body>

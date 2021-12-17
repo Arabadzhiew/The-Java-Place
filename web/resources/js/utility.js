@@ -15,6 +15,7 @@ function editForm(id, csrfToken){
 		
 		var br = document.createElement("br");
 		var comment = document.createElement("textarea");
+		comment.setAttribute("class", "form-control");
 		comment.setAttribute("id", "body");
 		comment.setAttribute("name", "body");
 		comment.setAttribute("rows", 10);
@@ -53,6 +54,7 @@ function commentForm(id, csrfToken){
 		
 		var br = document.createElement("br");
 		var comment = document.createElement("textarea");
+		comment.setAttribute("class", "form-control");
 		comment.setAttribute("id", "body");
 		comment.setAttribute("name", "body");
 		comment.setAttribute("rows", 10);

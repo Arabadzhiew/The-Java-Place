@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.arabadzhiev.site.controller.SearchController.SearchForm;
 import com.arabadzhiev.site.entity.Thread;
 import com.arabadzhiev.site.entity.ThreadComment;
 import com.arabadzhiev.site.service.SubService;
@@ -45,6 +46,7 @@ public class ThreadController {
 		model.put("action", "create");
 		model.put("usersOnline", sessionRegistry.getAllPrincipals().size());
 		model.put("userCount", userService.getCount());
+		model.put("searchForm", new SearchForm());
 		
 		return "thread/threadForm";
 	}
@@ -59,6 +61,7 @@ public class ThreadController {
 			model.put("action", "create");
 			model.put("usersOnline", sessionRegistry.getAllPrincipals().size());
 			model.put("userCount", userService.getCount());
+			model.put("searchForm", new SearchForm());
 			return new ModelAndView("thread/threadForm");
 		}
 		Thread thread = new Thread();
@@ -85,6 +88,7 @@ public class ThreadController {
 		model.put("usersOnlineList", sessionRegistry.getAllPrincipals());
 		model.put("usersOnline", sessionRegistry.getAllPrincipals().size());
 		model.put("userCount", userService.getCount());
+		model.put("searchForm", new SearchForm());
 		if(!threadSubUrl.equals(subUrl)) {
 			return new ModelAndView(new RedirectView("/sub/"+threadSubUrl+"/thread/view?id="+id, true));
 		}
@@ -106,6 +110,7 @@ public class ThreadController {
 		model.put("action", "edit");
 		model.put("usersOnline", sessionRegistry.getAllPrincipals().size());
 		model.put("userCount", userService.getCount());
+		model.put("searchForm", new SearchForm());
 		
 		return new ModelAndView("thread/threadForm");
 	}
@@ -120,6 +125,7 @@ public class ThreadController {
 			threadForm.setBody(thread.getBody());
 			model.put("threadForm", threadForm);
 			model.put("sub", subService.getSub(subUrl));
+			model.put("searchForm", new SearchForm());
 			return new ModelAndView("thread/threadForm");
 		}
 		
@@ -143,6 +149,7 @@ public class ThreadController {
 			@Valid CommentForm commentForm, Errors errors) {
 		model.put("subUrl", subUrl);
 		model.put("subName", subService.getSub(subUrl).getName());
+		model.put("searchForm", new SearchForm());
 		
 		Thread thread = threadService.getThread(id);
 		if(errors.hasErrors()) {

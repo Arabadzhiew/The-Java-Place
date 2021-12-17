@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.arabadzhiev.site.controller.SearchController.SearchForm;
 import com.arabadzhiev.site.service.SubService;
 import com.arabadzhiev.site.service.UserService;
 
@@ -25,6 +26,7 @@ public class SubController {
 		model.put("subs", subService.getSubs());
 		model.put("usersOnline", sessionRegistry.getAllPrincipals().size());
 		model.put("userCount", userService.getCount());
+		model.put("searchForm", new SearchForm());
 		
 		return new ModelAndView("sub/list");
 	}
@@ -36,6 +38,7 @@ public class SubController {
 		model.put("subName", subService.getSub(subUrl).getName());
 		model.put("usersOnline", sessionRegistry.getAllPrincipals().size());
 		model.put("userCount", userService.getCount());
+		model.put("searchForm", new SearchForm());
 		
 		return new ModelAndView("thread/list");
 	}

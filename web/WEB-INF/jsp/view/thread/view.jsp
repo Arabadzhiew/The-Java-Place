@@ -5,8 +5,17 @@
 					<a class="text-decoration-none" href="<c:url value="/sub/${sub.url }"/>"> <c:out value="${sub.name }"/></a><br/><br/>
 					<div class="row">
 						<div class="col-10">
-							<h2>${thread.title }</h2>
-							<p>${thread.body }</p><br/>
+							<div class="d-flex justify-content-between border-bottom border-muted">
+								<div class="d-flex flex-column">
+									<h2>${thread.title }</h2>
+								</div>	
+								<div class="d-flex flex-column">
+									<small class="text-secondary">
+										${thread.dateCreated.dayOfMonth }/${thread.dateCreated.monthValue }/${thread.dateCreated.year }&nbsp;${thread.dateCreated.hour }:${thread.dateCreated.minute }
+									</small>
+								</div>						
+							</div>
+							<p style="white-space: pre-line;">${thread.body }</p><br/>
 						</div>
 						<div class="col-2 pb-3 border rounded bg-light" align="center">
 							<security:authorize access="#thread.user.username == authentication.name" var="ownComment"/>

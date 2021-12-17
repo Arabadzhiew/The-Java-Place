@@ -97,5 +97,10 @@ public class DefaultThreadService implements ThreadService{
 		threadRepository.delete(thread);
 		
 	}
+	
+	@Override
+	public Page<Thread> searchThread(String query, Pageable pageable){
+		return threadRepository.search(query, pageable);
+	}
 
 }

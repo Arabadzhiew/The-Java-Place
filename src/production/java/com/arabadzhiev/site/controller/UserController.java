@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.arabadzhiev.site.controller.SearchController.SearchForm;
 import com.arabadzhiev.site.entity.User;
 import com.arabadzhiev.site.service.ThreadCommentService;
 import com.arabadzhiev.site.service.ThreadService;
@@ -37,6 +38,7 @@ public class UserController {
 		model.put("usersOnlineList", sessionRegistry.getAllPrincipals());
 		model.put("userCount", userService.getCount());
 		model.put("lastActive", user.getLastActive().toLocalDate().until(LocalDate.now(), ChronoUnit.DAYS));
+		model.put("searchForm", new SearchForm());
 		
 		return new ModelAndView("user/view");
 	}
@@ -53,6 +55,7 @@ public class UserController {
 		model.put("userCount", userService.getCount());
 		model.put("threads", threadService.getByUser(user, pageable));
 		model.put("lastActive", user.getLastActive().toLocalDate().until(LocalDate.now(), ChronoUnit.DAYS));
+		model.put("searchForm", new SearchForm());
 		
 		return new ModelAndView("user/threads");
 	}
@@ -69,6 +72,7 @@ public class UserController {
 		model.put("userCount", userService.getCount());
 		model.put("comments", commentService.getComments(user, pageable));
 		model.put("lastActive", user.getLastActive().toLocalDate().until(LocalDate.now(), ChronoUnit.DAYS));
+		model.put("searchForm", new SearchForm());
 		
 		return new ModelAndView("user/comments");
 	}

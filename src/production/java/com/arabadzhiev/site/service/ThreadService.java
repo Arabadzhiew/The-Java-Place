@@ -22,4 +22,5 @@ public interface ThreadService {
 	Page<Thread> getByUser(User user, Pageable pageable);
 	@PreAuthorize("#thread.user.username == authentication.name or hasAuthority(\"ADMIN\")")
 	void deleteThread(@P("thread")Thread thread);
+	Page<Thread> searchThread(String query, Pageable pagealble);
 }
