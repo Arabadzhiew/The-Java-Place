@@ -11,7 +11,7 @@
 								</div>	
 								<div class="d-flex flex-column">
 									<small class="text-secondary">
-										${thread.dateCreated.dayOfMonth }/${thread.dateCreated.monthValue }/${thread.dateCreated.year }&nbsp;${thread.dateCreated.hour }:${thread.dateCreated.minute }
+										${thread.dateCreated.dayOfMonth }&nbsp;<format:month value="${thread.dateCreated.monthValue }"/>&nbsp;${thread.dateCreated.year }&nbsp;<format:time value="${thread.dateCreated.hour}"/>:<format:time value="${thread.dateCreated.minute}"/>
 									</small>
 								</div>						
 							</div>
@@ -61,14 +61,7 @@
 						<div class="col-10">
 							<c:if test="${c.dateCreated != null }">
 								<div class="border-bottom" align="right">
-									<c:choose>
-										<c:when test="${c.dateCreated.minute > 10 }">
-											<small class="text-muted">${c.dateCreated.dayOfMonth }/${c.dateCreated.monthValue }/${c.dateCreated.year }&nbsp;${c.dateCreated.hour }:${c.dateCreated.minute }</small>
-										</c:when>
-										<c:otherwise>
-											<small class="text-muted">${c.dateCreated.dayOfMonth }/${c.dateCreated.monthValue }/${c.dateCreated.year }&nbsp;${c.dateCreated.hour }:0${c.dateCreated.minute }</small>
-										</c:otherwise>
-									</c:choose>
+									<small class="text-muted">${c.dateCreated.dayOfMonth }&nbsp;<format:month value="${c.dateCreated.monthValue }"/>&nbsp;${c.dateCreated.year }&nbsp;<format:time value="${c.dateCreated.hour }"/>:<format:time value="${c.dateCreated.minute }"/></small>
 								</div><br/><br/>
 							</c:if>
 							<p id="comment-${c.id }" style="white-space: pre-line;">${c.body }</p>

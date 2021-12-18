@@ -3,3 +3,4 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/template" %>
+<%@ taglib prefix="format" tagdir="/WEB-INF/tags/format" %>

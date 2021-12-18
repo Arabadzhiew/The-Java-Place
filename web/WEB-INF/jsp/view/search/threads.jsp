@@ -37,7 +37,7 @@
 									</a>
 								</small><br/>
 								<small>
-									on ${t.dateCreated.dayOfMonth }/${t.dateCreated.monthValue }/${t.dateCreated.year }
+									on ${t.dateCreated.dayOfMonth }&nbsp;<format:month value="${t.dateCreated.monthValue }"/>&nbsp;${t.dateCreated.year }
 								</small><br/>
 								<small>
 									Sub:

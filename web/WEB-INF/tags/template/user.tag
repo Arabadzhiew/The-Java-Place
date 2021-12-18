@@ -30,7 +30,7 @@
 			</div>
 			<div class="col-3">
 				<h2>${user.username }</h2>
-				<small>Registered on: ${user.dateCreated.dayOfMonth }/${user.dateCreated.monthValue }/${user.dateCreated.year }</small><br/>
+				<small>Registered on: ${user.dateCreated.dayOfMonth }&nbsp;<format:month value="${user.dateCreated.monthValue }"/>&nbsp;${user.dateCreated.year }</small><br/>
 				<small id="lastActive">Last active: </small>
 				<script type="text/javascript">lastActive(${lastActive});</script>
 			</div>

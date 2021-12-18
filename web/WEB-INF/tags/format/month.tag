@@ -1,4 +1,5 @@
 <%@ tag body-content="scriptless"%>
+<%@ tag trimDirectiveWhitespaces="true" %>
 <%@ attribute name="value" type="java.lang.Integer" rtexprvalue="true" required="true"%>
 <%@ include file="/WEB-INF/jsp/base.jspf" %>
 
