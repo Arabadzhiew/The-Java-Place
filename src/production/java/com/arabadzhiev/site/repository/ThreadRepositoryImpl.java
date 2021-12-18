@@ -32,8 +32,8 @@ public class ThreadRepositoryImpl implements SearchableRepository<Thread>{
 				"SELECT DISTINCT t.*, (" + matchThread + " + " +  matchComment + ") "
 				+ "AS _ft_scoreColumn FROM Thread t "
 				+ "LEFT OUTER JOIN Thread_Comment c ON t.Id = c. Thread_Id "
-				+ "WHERE " + matchThread + " OR " + matchComment
-				+ " ORDER BY _ft_scoreColumn DESC, t.Id DESC", "searchResultMapping.thread").setParameter(1, query)
+				+ "WHERE (" + matchThread + " OR " + matchComment + ") GROUP BY t.Id" 
+				+ " ORDER BY _ft_scoreColumn ASC, t.Id DESC", "searchResultMapping.thread").setParameter(1, query)
 					.setFirstResult((int)pageable.getOffset())
 					.setMaxResults(pageable.getPageSize())
 					.getResultList();
