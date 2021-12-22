@@ -25,13 +25,12 @@
 							<c:choose>
 								<c:when test="${thread.user.role.equals('User')}">
 									<p class="text-secondary">User</p>
-									<img class="rounded-circle img-thumbnail" width="66" height="66" alt="User" src="<c:url value="/resources/images/userAvatar.png"/>">
 								</c:when>
 								<c:when test="${thread.user.role.equals('Admin') }">
 									<p class="text-danger">Admin</p>
-									<img class="rounded-circle img-thumbnail" width="66" height="66" alt="Admin" src="<c:url value="/resources/images/adminAvatar.png"/>">
 								</c:when>
 							</c:choose>
+							<template:profileImage user="${thread.user }" width="66" height="66"></template:profileImage>
 							<c:choose>
 								<c:when test="${usersOnlineList.contains(thread.user) }">
 									<br/><br/><div class="rounded-circle" style="width: 15px; height: 15px; background-color: #198754;"></div>
@@ -75,13 +74,12 @@
 							<c:choose>
 								<c:when test="${c.user.role.equals('User')}">
 									<p class="text-secondary">User</p>
-									<img class="rounded-circle img-thumbnail" width="66" height="66" alt="User" src="<c:url value="/resources/images/userAvatar.png"/>">
 								</c:when>
 								<c:when test="${c.user.role.equals('Admin') }">
 									<p class="text-danger">Admin</p>
-									<img class="rounded-circle img-thumbnail" width="66" height="66" alt="Admin" src="<c:url value="/resources/images/adminAvatar.png"/>">
 								</c:when>
 							</c:choose>
+							<template:profileImage user="${c.user }" width="66" height="66"></template:profileImage>
 							<c:choose>
 								<c:when test="${usersOnlineList.contains(c.user) }">
 									<br/><br/><div class="rounded-circle" style="width: 15px; height: 15px; background-color: #198754;"></div>
@@ -106,18 +104,7 @@
 			</c:forEach>
 		</div>
 		<div class="pb-3" align="center">
-			<c:if test="${comments.totalPages > 1}">
-				<c:forEach begin="1" end="${comments.totalPages }" var="p">
-					<c:choose>
-						<c:when test="${comments.pageable.pageNumber + 1 != p }">
-							<a class="btn btn-sm btn-outline-primary" href="<c:url value="/sub/${sub.url }/thread/view?id=${thread .id}&paging.page=${p }&paging.size=${comments.size }"/>">${p }</a>
-						</c:when>
-						<c:otherwise>
-							<a class="btn btn-sm btn-primary" href="javascript:void 0;">${p }</a>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
-			</c:if>
+			<template:pageButtons page="${comments }" url="/sub/${sub.url }/thread/view?id=${thread .id}"/>
 		</div>
 	</div>
 </template:main>

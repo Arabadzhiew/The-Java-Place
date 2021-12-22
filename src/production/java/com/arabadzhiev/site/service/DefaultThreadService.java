@@ -82,6 +82,11 @@ public class DefaultThreadService implements ThreadService{
 	}
 	
 	@Override
+	public Page<Thread> getBySub(Sub sub, Pageable pageable) {
+		return threadRepository.findBySub(sub, pageable);
+	}
+	
+	@Override
 	public void deleteThread(Thread thread) {
 		
 		Sub sub = thread.getSub();
@@ -102,5 +107,4 @@ public class DefaultThreadService implements ThreadService{
 	public Page<Thread> searchThread(String query, Pageable pageable){
 		return threadRepository.search(query, pageable);
 	}
-
 }

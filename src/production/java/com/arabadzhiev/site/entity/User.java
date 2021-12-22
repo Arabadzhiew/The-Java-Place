@@ -28,6 +28,7 @@ public class User implements UserDetails, CredentialsContainer{
 	private String username;
 	private byte[] hashedPassword;
 	private String email;
+	private byte[] profileImage;
 	private String role;
 	private LocalDateTime dateCreated;
 	private LocalDateTime lastActive;
@@ -64,6 +65,13 @@ public class User implements UserDetails, CredentialsContainer{
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	@Column(name = "Profile_Image")
+	public byte[] getProfileImage() {
+		return profileImage;
+	}
+	public void setProfileImage(byte[] profileImage) {
+		this.profileImage = profileImage;
 	}
 	public String getRole() {
 		return role;

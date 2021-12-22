@@ -8,6 +8,17 @@
 		<title><c:out value="${title }"/></title>
 		<link rel="shortcut icon" href="<c:url value="/favicon.ico"/>"/>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+		<style type="text/css">
+			#userHref{
+				color: black;
+				text-decoration: none;
+			}
+			#userHref:hover{
+				color: #520011;
+				text-decoration: underline;
+			}
+		</style>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 		<script src="<c:url value="/resources/js/forms.js"/>"></script>
 		<script src="<c:url value="/resources/js/utility.js"/>"></script>
         	
@@ -29,10 +40,20 @@
 					<form:input class="form-control" path="query" placeholder="Search for threads"/>
 				</form:form>
 			</div>
-			<div class="d-flex flex-column align-self-start">
-				<a href="javascript:void 0;" class="btn btn-outline-danger" onclick="postInvisibleForm('<c:url value="/logout"/>', '${_csrf.token }');">
-				Log Out
-				</a>
+			
+			<div class="d-flex flex-column align-self-start px-3">
+				<div class="btn-group">
+					<a class="btn btn-outline-dark" href="<c:url value="/user/${username }"/>">${username }</a>
+					<button class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split"
+					data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					</button>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="<c:url value="/user/${username }/threads"/>">Your threads</a>
+						<a class="dropdown-item" href="<c:url value="/user/${username }/comments"/>">Your comments</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item text-danger" href="javascript:void 0;" onclick="postInvisibleForm('<c:url value="/logout"/>', '${_csrf.token }');">Log out</a>
+					</div>
+				</div>
 			</div>
 		</div><br/>
 		<jsp:doBody/>

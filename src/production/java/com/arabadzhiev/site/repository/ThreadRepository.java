@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
+import com.arabadzhiev.site.entity.Sub;
 import com.arabadzhiev.site.entity.Thread;
 import com.arabadzhiev.site.entity.User;
 
@@ -13,4 +14,5 @@ public interface ThreadRepository extends CrudRepository<Thread, Long>, Searchab
 	
 	List<Thread> findBySubUrl(String url);
 	Page<Thread> findByUser(User user, Pageable pageable);
+	Page<Thread> findBySub(Sub sub, Pageable pageable);
 }

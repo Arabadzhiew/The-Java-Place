@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,7 @@ public class SearchController {
 		model.put("hasResults", results.hasContent());
 		model.put("usersOnline", sessionRegistry.getAllPrincipals().size());
 		model.put("userCount", userService.getCount());
+		model.put("username", SecurityContextHolder.getContext().getAuthentication().getName());
 		model.put("query", query);
 		
 		return new ModelAndView("search/threads");

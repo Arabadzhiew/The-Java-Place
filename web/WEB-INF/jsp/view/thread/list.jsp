@@ -10,7 +10,7 @@
 							<th>Actions</th>
 						</security:authorize>
 					</tr>
-					<c:forEach items="${threads }" var="t">
+					<c:forEach items="${threads.content }" var="t">
 						<tr>
 							<td>
 								<a class="text-decoration-none" href="<c:url value="/sub/${subUrl }/thread/view?id=${t.id }"/>"><c:out value="${t.title }"/></a>
@@ -26,6 +26,9 @@
 					</c:forEach>
 				</table>
 				<a class="btn btn-outline-secondary w-100" href="<c:url value="/sub/${subUrl }/thread/create"/>">Create Thread</a><br/><br/>
-			</div><br/>
+			</div>
+		</div>
+		<div class="pt-3" align="center">
+			<template:pageButtons page="${threads }" url="/sub/${subUrl }"></template:pageButtons>
 		</div>
 </template:main>

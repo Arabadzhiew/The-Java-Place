@@ -46,6 +46,7 @@ public class ThreadController {
 		model.put("action", "create");
 		model.put("usersOnline", sessionRegistry.getAllPrincipals().size());
 		model.put("userCount", userService.getCount());
+		model.put("username", SecurityContextHolder.getContext().getAuthentication().getName());
 		model.put("searchForm", new SearchForm());
 		
 		return "thread/threadForm";
@@ -88,6 +89,7 @@ public class ThreadController {
 		model.put("usersOnlineList", sessionRegistry.getAllPrincipals());
 		model.put("usersOnline", sessionRegistry.getAllPrincipals().size());
 		model.put("userCount", userService.getCount());
+		model.put("username", SecurityContextHolder.getContext().getAuthentication().getName());
 		model.put("searchForm", new SearchForm());
 		if(!threadSubUrl.equals(subUrl)) {
 			return new ModelAndView(new RedirectView("/sub/"+threadSubUrl+"/thread/view?id="+id, true));
@@ -110,6 +112,7 @@ public class ThreadController {
 		model.put("action", "edit");
 		model.put("usersOnline", sessionRegistry.getAllPrincipals().size());
 		model.put("userCount", userService.getCount());
+		model.put("username", SecurityContextHolder.getContext().getAuthentication().getName());
 		model.put("searchForm", new SearchForm());
 		
 		return new ModelAndView("thread/threadForm");

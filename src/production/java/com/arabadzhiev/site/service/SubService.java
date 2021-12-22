@@ -2,11 +2,15 @@ package com.arabadzhiev.site.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.arabadzhiev.site.entity.Sub;
 
 public interface SubService {
 	
-	public Sub getSub(String subUrl);
-	public List<Sub> getSubs();
+	Sub getSub(String subUrl);
+	List<Sub> getSubs();
+	Page<Sub> getSubs(Pageable pageable);
 
 }

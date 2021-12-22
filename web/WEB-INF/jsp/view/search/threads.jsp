@@ -57,21 +57,10 @@
 				<i>There are no results for your search.</i>
 			</c:otherwise>
 		</c:choose>
-		<c:if test="${results.totalPages > 1 }">
-			<div class="row pt-3">
-				<div align="center">
-					<c:forEach begin="1" end="${results.totalPages }" var="p">
-						<c:choose>
-							<c:when test="${results.pageable.pageNumber + 1 != p }">
-								<a class="btn btn-outline-primary btn-sm" href="<c:url value="/search/threads?query=${query }&paging.page=${p }&paging.size=${results.size }"/>">${p }</a>
-							</c:when>
-							<c:otherwise>
-								<a class="btn btn-primary btn-sm" href="javascript:void 0;">${p }</a>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</div>
+		<div class="row pt-3">
+			<div align="center">
+				<template:pageButtons url="/search/threads?query=${query }" page="${results }"/>	
 			</div>
-		</c:if>
+		</div>
 	</div>
 </template:main>

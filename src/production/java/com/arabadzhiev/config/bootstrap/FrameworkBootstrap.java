@@ -1,5 +1,6 @@
 package com.arabadzhiev.config.bootstrap;
 
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
@@ -31,6 +32,7 @@ public class FrameworkBootstrap implements WebApplicationInitializer{
 		ServletRegistration.Dynamic dispatcher =
 				container.addServlet("springDispatcher", new DispatcherServlet(webServletContext));
 		dispatcher.setLoadOnStartup(1);
+		dispatcher.setMultipartConfig(new MultipartConfigElement(null, 20_971_520L, 41_943_040L, 512_000));
 		dispatcher.addMapping("/");
 		
 		

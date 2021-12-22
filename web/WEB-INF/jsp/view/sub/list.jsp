@@ -10,7 +10,7 @@
 						<th>Comments</th>
 						<th>Last Active</th>
 					</tr>
-					<c:forEach items="${subs }" var = "s">
+					<c:forEach items="${subs.content }" var = "s">
 						<tr>
 							<td>
 								<a href = "<c:url value="/sub/${s.url }"/>" class="text-decoration-none"><c:out value="${s.name }"/></a>
@@ -32,5 +32,8 @@
 					</c:forEach>
 				</table>
 			</div>
+		</div>
+		<div class="pt-3" align="center">
+			<template:pageButtons url="/" page="${subs }"/>
 		</div>
 </template:main>

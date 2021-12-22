@@ -19,23 +19,14 @@
 								<a class="text-decoration-none" href="<c:url value="/sub/${c.thread.sub.url }/thread/view?id=${c.thread.id }"/>">${c.thread.title }</a>
 							</td>
 							<td align ="right">
-								<small>${c.dateCreated.dayOfMonth }/${c.dateCreated.monthValue }/${c.dateCreated.year }</small>
+								<small>${c.dateCreated.dayOfMonth }&nbsp;<format:month value="${c.dateCreated.monthValue }"/>&nbsp;${c.dateCreated.year }</small>
 							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 			<div align="center">
-				<c:forEach begin="1" end="${comments.totalPages }" var="p">
-					<c:choose>
-						<c:when test="${comments.pageable.pageNumber + 1 != p }">
-							<a class="btn btn-sm btn-outline-primary" href="<c:url value="/user/${user.username }/comments?paging.page=${p }&paging.size=${comments.size }"/>">${p }</a>
-						</c:when>
-						<c:otherwise>
-							<a class="btn btn-sm btn-primary" href="javascript:void 0;">${p }</a>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
+				<template:pageButtons url="/user/${user.username }/comments" page="${comments }"/>
 			</div><br/>
 		</div>
 	</div><br/>

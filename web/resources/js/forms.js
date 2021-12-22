@@ -21,6 +21,12 @@ var deleteThread = function(url, id, csrfToken){
 
 var deleteComment = function(url, csrfToken){
 	if(confirm("Are you sure you want to delete this comment")){
-		postInvisibleForm(url, csrfToken)
+		postInvisibleForm(url, csrfToken);
+	}
+}
+
+function deleteProfileImage(url, username, csrfToken){
+	if(confirm("Are you sure you want to delete " + username + " profile image?")){
+		postInvisibleForm(url, csrfToken);
 	}
 }

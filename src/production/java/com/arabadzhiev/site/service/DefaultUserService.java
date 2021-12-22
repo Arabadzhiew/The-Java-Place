@@ -1,8 +1,8 @@
 package com.arabadzhiev.site.service;
 
+import java.time.LocalDateTime;
+
 import javax.transaction.Transactional;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -31,11 +31,15 @@ public class DefaultUserService implements UserService{
 	}
 
 	@Override
-	public void persistUser(@NotNull(message = "The user entity cannot be null.") User user,
-			@NotBlank(message = "The password field cannot be blank") String password) {
+	public void persistUser(User user, String password) {
 		user.setHashedPassword(BCrypt.hashpw(password, BCrypt.gensalt(HASHING_ROUNDS)).getBytes());
 		this.userRepository.save(user);
 		
+	}
+	@Override
+	public void updateUser(User user) {
+		user.setLastActive(LocalDateTime.now());
+		userRepository.save(user);
 	}
 	
 	@Override 

@@ -19,23 +19,14 @@
 								<a class="text-decoration-none" href="<c:url value="/sub/${t.sub.url }/thread/view?id=${t.id }"/>">${t.title }</a>
 							</td>
 							<td align ="right">
-								<small>${t.dateCreated.dayOfMonth }/${t.dateCreated.monthValue }/${t.dateCreated.year }</small>
+								<small>${t.dateCreated.dayOfMonth }&nbsp;<format:month value="${t.dateCreated.monthValue }"/>&nbsp;${t.dateCreated.year }</small>
 							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 			<div align="center">
-				<c:forEach begin="1" end="${threads.totalPages }" var="p">
-					<c:choose>
-						<c:when test="${threads.pageable.pageNumber + 1 != p }">
-							<a class="btn btn-sm btn-outline-primary" href="<c:url value="/user/${user.username }/threads?paging.page=${p }&paging.size=${comments.size }"/>">${p }</a>
-						</c:when>
-						<c:otherwise>
-							<a class="btn btn-sm btn-primary" href="javascript:void 0;">${p }</a>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
+				<template:pageButtons url="/user/${user.username }/threads" page="${threads }"/>
 			</div><br/>
 		</div>
 	</div><br/>
