@@ -5,5 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 import com.arabadzhiev.site.entity.User;
 
 public interface UserRepository extends CrudRepository<User, Long>{
-	public User getByUsername(String username);
+	User getByUsername(String username);
+	boolean existsByUsername(String username);
 }

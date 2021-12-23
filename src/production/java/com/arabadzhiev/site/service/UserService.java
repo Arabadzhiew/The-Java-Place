@@ -18,5 +18,6 @@ public interface UserService extends UserDetailsService{
 	@PreAuthorize("#user.username == authentication.name or hasAuthority('ADMIN')")
 	void updateUser(@NotNull(message = "User entity passed to update is null") @P("user") User user);
 	long getCount();
+	boolean exists(@NotNull(message = "Ajax check passed in a null username")String username);
 
 }

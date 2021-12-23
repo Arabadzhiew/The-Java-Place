@@ -3,6 +3,7 @@ package com.arabadzhiev.site.service;
 import java.time.LocalDateTime;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -45,6 +46,11 @@ public class DefaultUserService implements UserService{
 	@Override 
 	public long getCount() {
 		return this.userRepository.count();
+	}
+
+	@Override
+	public boolean exists(@NotNull(message = "Ajax check passed in a null username") String username) {
+		return userRepository.existsByUsername(username);
 	}
 
 }
