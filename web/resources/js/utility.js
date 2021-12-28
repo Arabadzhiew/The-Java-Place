@@ -36,6 +36,7 @@ function editForm(id, csrfToken){
 		form.appendChild(csrf);
 		
 		document.getElementById("cmntDiv-"+id).appendChild(form);
+		document.getElementById("cmntDiv-"+id).appendChild(form.appendChild(br.cloneNode(false)));
 		document.getElementById("editHref-"+id).innerHTML = "Back";
 	}
 }

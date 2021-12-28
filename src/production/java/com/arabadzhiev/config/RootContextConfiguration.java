@@ -2,6 +2,8 @@ package com.arabadzhiev.config;
 
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.Executor;
 
 import javax.persistence.SharedCacheMode;
 import javax.persistence.ValidationMode;
@@ -14,9 +16,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.annotation.AsyncConfigurer;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.SchedulingConfigurer;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -24,8 +35,14 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 @Configuration
-@EnableTransactionManagement(order = 1,
-		mode = AdviceMode.PROXY, proxyTargetClass = false
+@EnableScheduling
+@EnableAsync(
+		order = 1,
+		mode = AdviceMode.PROXY, proxyTargetClass = true
+)
+@EnableTransactionManagement(
+		order = 2,
+		mode = AdviceMode.PROXY, proxyTargetClass = true
 )
 @EnableJpaRepositories(
 		basePackages = "com.arabadzhiev.site.repository",
@@ -37,7 +54,7 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
 		excludeFilters = @ComponentScan.Filter(Controller.class)
 )
 @Import({SecurityConfiguration.class})
-public class RootContextConfiguration {
+public class RootContextConfiguration implements AsyncConfigurer, SchedulingConfigurer{
 	
 	@Bean
 	public LocalValidatorFactoryBean localValidatorFactoryBean() {
@@ -77,8 +94,49 @@ public class RootContextConfiguration {
 	}
 	
 	@Bean
-	
 	public PlatformTransactionManager jpaTransactionManager() {
 		return new JpaTransactionManager(this.entityManagerFactoryBean().getObject());
+	}
+	
+	@Bean
+	public ThreadPoolTaskScheduler taskScheduler(){
+		ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
+		
+		taskScheduler.setPoolSize(20);
+		taskScheduler.setThreadNamePrefix("task-");
+		taskScheduler.setAwaitTerminationSeconds(60);
+		taskScheduler.setWaitForTasksToCompleteOnShutdown(true);
+		
+		return taskScheduler;
+	}
+	@Bean
+	public JavaMailSender getJavaMailSender() {
+		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+		
+		mailSender.setHost("smtp.gmail.com");
+		mailSender.setPort(587);
+		
+		mailSender.setUsername("changeUser@gmail.com");
+		mailSender.setPassword("changePassword");
+		
+		Properties props = mailSender.getJavaMailProperties();
+		props.put("mail.transport.protocol", "smtp");
+	    props.put("mail.smtp.auth", "true");
+	    props.put("mail.smtp.starttls.enable", "true");
+	    props.put("mail.debug", "true");
+		
+		return mailSender;
+	}
+	
+	@Override 
+	public Executor getAsyncExecutor() {
+		Executor executor = this.taskScheduler();
+		return executor;
+	}
+	@Override
+	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+		TaskScheduler taskScheduler = this.taskScheduler();
+		taskRegistrar.setTaskScheduler(taskScheduler);
+		
 	}
 }

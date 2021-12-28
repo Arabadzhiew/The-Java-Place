@@ -21,7 +21,7 @@ import com.arabadzhiev.site.service.UserService;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true,
 							order = 0,
-							mode = AdviceMode.PROXY, proxyTargetClass = false
+							mode = AdviceMode.PROXY, proxyTargetClass = true
 )
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
@@ -56,6 +56,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		security
 			.authorizeRequests()
 				.antMatchers("/signup").anonymous()
+				.antMatchers("/recovery").anonymous()
+				.antMatchers("/recovery/*").anonymous()
 				.antMatchers("/user/exists").anonymous()
 				.anyRequest().authenticated()
 			.and().formLogin()

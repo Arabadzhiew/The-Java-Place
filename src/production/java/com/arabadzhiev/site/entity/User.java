@@ -28,6 +28,8 @@ public class User implements UserDetails, CredentialsContainer{
 	private String username;
 	private byte[] hashedPassword;
 	private String email;
+	private byte[] recoveryKey;
+	private LocalDateTime recoveryKeyTimestamp;
 	private byte[] profileImage;
 	private String role;
 	private LocalDateTime dateCreated;
@@ -65,6 +67,20 @@ public class User implements UserDetails, CredentialsContainer{
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	@Column(name = "Recovery_Key")
+	public byte[] getRecoveryKey() {
+		return recoveryKey;
+	}
+	public void setRecoveryKey(byte[] recoveryKey) {
+		this.recoveryKey = recoveryKey;
+	}
+	@Column(name = "Recovery_Key_Timestamp")
+	public LocalDateTime getRecoveryKeyTimestamp() {
+		return recoveryKeyTimestamp;
+	}
+	public void setRecoveryKeyTimestamp(LocalDateTime recoveryDateTimestamp) {
+		this.recoveryKeyTimestamp = recoveryDateTimestamp;
 	}
 	@Column(name = "Profile_Image")
 	public byte[] getProfileImage() {
