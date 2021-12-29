@@ -40,21 +40,39 @@
 					<form:input class="form-control" path="query" placeholder="Search for threads"/>
 				</form:form>
 			</div>
-			
-			<div class="d-flex flex-column align-self-start px-3">
-				<div class="btn-group">
-					<a class="btn btn-outline-dark" href="<c:url value="/user/${username }"/>">${username }</a>
-					<button class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split"
-					data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					</button>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="<c:url value="/user/${username }/threads"/>">Your threads</a>
-						<a class="dropdown-item" href="<c:url value="/user/${username }/comments"/>">Your comments</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item text-danger" href="javascript:void 0;" onclick="postInvisibleForm('<c:url value="/logout"/>', '${_csrf.token }');">Log out</a>
+			<security:authorize var="authenticated" access="isAuthenticated()"></security:authorize>
+			<c:choose>
+				<c:when test="${authenticated}">
+					<div class="d-flex flex-column align-self-start px-3">
+						<div class="btn-group">
+							<a class="btn btn-outline-dark" href="<c:url value="/user/${username }"/>">${username }</a>
+							<button class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split"
+							data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							</button>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="<c:url value="/user/${username }/threads"/>">Your threads</a>
+								<a class="dropdown-item" href="<c:url value="/user/${username }/comments"/>">Your comments</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item text-danger" href="javascript:void 0;" onclick="postInvisibleForm('<c:url value="/logout"/>', '${_csrf.token }');">Log out</a>
+							</div>
+						</div>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="<c:url value="/user/${username }/threads"/>">Your threads</a>
+							<a class="dropdown-item" href="<c:url value="/user/${username }/comments"/>">Your comments</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item text-danger" href="javascript:void 0;" onclick="postInvisibleForm('<c:url value="/logout"/>', '${_csrf.token }');">Log out</a>
+						</div>
 					</div>
-				</div>
-			</div>
+				</c:when>
+				<c:otherwise>
+					<div class="d-flex flex-column align-self-start pl-3" style="margin: 0 15px 0 0;">
+						<a class="btn btn-outline-primary" href="<c:url value="/login"/>">Log In</a>
+					</div>
+					<div class="d-flex flex-column align-self-start pr-3" style="margin: 0 15px 0 0;">
+						<a class="btn btn-primary" href="<c:url value="/signup"/>">Sign Up</a>
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</div><br/>
 		<jsp:doBody/>
 	</body>

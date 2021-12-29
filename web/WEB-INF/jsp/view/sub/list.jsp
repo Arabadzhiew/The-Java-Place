@@ -1,6 +1,8 @@
 <template:main title="Subs">
 	<div align="center">
-			<h2 class="text-muted">Welcome, <security:authentication property="principal.username"/>!</h2>
+			<security:authorize access="isAuthenticated()">
+				<h2 class="text-muted">Welcome, <security:authentication property="principal.username"/>!</h2>
+			</security:authorize>
 			<h1 class="display-1">Subs</h1>
 			<div class="d-flex px-5">
 				<table class="table">

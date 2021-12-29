@@ -1,5 +1,12 @@
 package com.arabadzhiev.config;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
@@ -11,9 +18,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
 import com.arabadzhiev.site.service.UserService;
 
@@ -32,9 +43,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	public AuthenticationManager authenticationManagerBean() throws Exception{
 		return super.authenticationManagerBean();
 	}
+	
 	@Bean
 	protected SessionRegistry sessionRegistryImpl() {
 		return new SessionRegistryImpl();
+	}
+	
+	@Bean
+	public SimpleUrlAuthenticationSuccessHandler authenticationSuccessHandler() {
+		CustomAuthenticationSuccessHandler authenticationSuccessHandler = new CustomAuthenticationSuccessHandler("/");
+		authenticationSuccessHandler.setUseReferer(true);
+		
+		return authenticationSuccessHandler;
+	}
+	
+	@Bean
+	public SimpleUrlLogoutSuccessHandler logoutSuccessHandler() {
+		SimpleUrlLogoutSuccessHandler logoutSuccessHandler = new SimpleUrlLogoutSuccessHandler();
+		logoutSuccessHandler.setUseReferer(true);
+		
+		return logoutSuccessHandler;
 	}
 	
 	@Override
@@ -55,19 +83,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity security) throws Exception{
 		security
 			.authorizeRequests()
+				.antMatchers("/sub/*/thread/create").authenticated()
+				.antMatchers("/sub/*/thread/edit").authenticated()
 				.antMatchers("/signup").anonymous()
 				.antMatchers("/recovery").anonymous()
 				.antMatchers("/recovery/*").anonymous()
 				.antMatchers("/user/exists").anonymous()
-				.anyRequest().authenticated()
+				.anyRequest().permitAll()
 			.and().formLogin()
 				.loginPage("/login").failureUrl("/login?error")
-				.defaultSuccessUrl("/")
 				.usernameParameter("username")
 				.passwordParameter("password")
+				.successHandler(this.authenticationSuccessHandler())
 				.permitAll()
 			.and().logout()
-				.logoutUrl("/logout").logoutSuccessUrl("/login?loggedOut")
+				.logoutUrl("/logout").logoutSuccessHandler(this.logoutSuccessHandler())
 				.invalidateHttpSession(true).deleteCookies("JSESSIONID")
 				.permitAll()
 			.and()
@@ -76,5 +106,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.sessionFixation().changeSessionId()
 				.maximumSessions(20).maxSessionsPreventsLogin(true)
 				.sessionRegistry(this.sessionRegistryImpl());
+	}
+	
+	public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler{
+		public CustomAuthenticationSuccessHandler(String defaultUrl) {
+			super.setDefaultTargetUrl(defaultUrl);
+		}
+		
+		public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+				Authentication authentication) throws ServletException, IOException {
+			HttpSession session = request.getSession(false);
+			if(session != null) {
+				String redirectUrl = (String)session.getAttribute("urlPriorLogin");
+				if(redirectUrl != null) {
+					session.removeAttribute("urlPriorLogin");
+					super.getRedirectStrategy().sendRedirect(request, response, redirectUrl);
+				}else {
+					super.onAuthenticationSuccess(request, response, authentication);
+				}
+			}else {
+				super.onAuthenticationSuccess(request, response, authentication);
+			}
+		}
 	}
 }

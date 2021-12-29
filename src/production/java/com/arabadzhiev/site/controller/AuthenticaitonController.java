@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -36,9 +37,13 @@ public class AuthenticaitonController {
 	@Autowired UserService userService;
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public ModelAndView login(Map<String, Object> model) {
+	public ModelAndView login(Map<String, Object> model, HttpServletRequest request) {
 		if(SecurityContextHolder.getContext().getAuthentication() instanceof UsernamePasswordAuthenticationToken) {
 			return new ModelAndView(new RedirectView("/", true));
+		}
+		String referer = request.getHeader("Referer");
+		if(referer != null) {
+			request.getSession().setAttribute("urlPriorLogin", referer);
 		}
 		model.put("loginForm", new LoginForm());
 		model.put("recoveryForm", new RecoveryForm());

@@ -1,58 +1,66 @@
 <template:main title="${thread.title }">
 	<div class="px-5">
 		<div>
-				<div class="container pb-3 border-bottom border-primary">
-					<a class="text-decoration-none" href="<c:url value="/sub/${sub.url }"/>"> <c:out value="${sub.name }"/></a><br/><br/>
-					<div class="row">
-						<div class="col-10">
-							<div class="d-flex justify-content-between border-bottom border-muted">
-								<div class="d-flex flex-column">
-									<h2>${thread.title }</h2>
-								</div>	
-								<div class="d-flex flex-column">
-									<small class="text-secondary">
-										${thread.dateCreated.dayOfMonth }&nbsp;<format:month value="${thread.dateCreated.monthValue }"/>&nbsp;${thread.dateCreated.year }&nbsp;<format:time value="${thread.dateCreated.hour}"/>:<format:time value="${thread.dateCreated.minute}"/>
-									</small>
-								</div>						
-							</div>
-							<p style="white-space: pre-line;">${thread.body }</p><br/>
+			<div class="container pb-3 border-bottom border-primary">
+				<a class="text-decoration-none" href="<c:url value="/sub/${sub.url }"/>"> <c:out value="${sub.name }"/></a><br/><br/>
+				<div class="row">
+					<div class="col-10">
+						<div class="d-flex justify-content-between border-bottom border-muted">
+							<div class="d-flex flex-column">
+								<h2>${thread.title }</h2>
+							</div>	
+							<div class="d-flex flex-column">
+								<small class="text-secondary">
+									${thread.dateCreated.dayOfMonth }&nbsp;<format:month value="${thread.dateCreated.monthValue }"/>&nbsp;${thread.dateCreated.year }&nbsp;<format:time value="${thread.dateCreated.hour}"/>:<format:time value="${thread.dateCreated.minute}"/>
+								</small>
+							</div>						
 						</div>
-						<div class="col-2 pb-3 border rounded bg-light" align="center">
-							<security:authorize access="#thread.user.username == authentication.name" var="ownComment"/>
-								<a class="link-dark text-decoration-none" href="<c:url value="/user/${thread.user.username }"/>">${thread.user.username }
-									<c:if test="${ownComment }">(you)</c:if>
-								</a>
-							<c:choose>
-								<c:when test="${thread.user.role.equals('User')}">
-									<p class="text-secondary">User</p>
-								</c:when>
-								<c:when test="${thread.user.role.equals('Admin') }">
-									<p class="text-danger">Admin</p>
-								</c:when>
-							</c:choose>
-							<template:profileImage user="${thread.user }" width="66" height="66"></template:profileImage>
-							<c:choose>
-								<c:when test="${usersOnlineList.contains(thread.user) }">
-									<br/><br/><div class="rounded-circle" style="width: 15px; height: 15px; background-color: #198754;"></div>
-									Online
-								</c:when>
-								<c:otherwise>
-									<br/><br/><div class="rounded-circle" style="width: 15px; height: 15px; background-color: #dc3545;"></div>
-									Offline
-								</c:otherwise>
-							</c:choose>
-						</div>
+						<p style="white-space: pre-line;">${thread.body }</p><br/>
 					</div>
-					<security:authorize access="#thread.user.username == authentication.name or hasAuthority('ADMIN')">
-								<a class="link-danger text-decoration-none" 
-								href="javascript:void 0;" onclick="deleteThread('<c:url value="/sub/${thread.sub.url }/thread/delete?id=${thread.id }"/>', ${thread.id }, '${_csrf.token }');">Delete</a>
-								&nbsp;
-								<a class="link text-decoration-none" 
-								href="<c:url value="/sub/${thread.sub.url }/thread/edit?id=${thread.id }"/>">Edit</a>&nbsp;
-							</security:authorize>
-							<a class="link-primary text-decoration-none" id="commentHref" href="javascript:void 0;" onclick="commentForm('${thread.id }', '${_csrf.token }')">Comment</a>
-							<div id="commentDiv"></div><br/>
-				</div><br/><br/>
+					<div class="col-2 pb-3 border rounded bg-light" align="center">
+						<security:authorize access="#thread.user.username == authentication.name" var="ownComment"/>
+							<a class="link-dark text-decoration-none" href="<c:url value="/user/${thread.user.username }"/>">${thread.user.username }
+								<c:if test="${ownComment }">(you)</c:if>
+							</a>
+						<c:choose>
+							<c:when test="${thread.user.role.equals('User')}">
+								<p class="text-secondary">User</p>
+							</c:when>
+							<c:when test="${thread.user.role.equals('Admin') }">
+								<p class="text-danger">Admin</p>
+							</c:when>
+						</c:choose>
+						<template:profileImage user="${thread.user }" width="66" height="66"></template:profileImage>
+						<c:choose>
+							<c:when test="${usersOnlineList.contains(thread.user) }">
+								<br/><br/><div class="rounded-circle" style="width: 15px; height: 15px; background-color: #198754;"></div>
+								Online
+							</c:when>
+							<c:otherwise>
+								<br/><br/><div class="rounded-circle" style="width: 15px; height: 15px; background-color: #dc3545;"></div>
+								Offline
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+				<security:authorize access="#thread.user.username == authentication.name or hasAuthority('ADMIN')">
+					<a class="link-danger text-decoration-none" 
+					href="javascript:void 0;" onclick="deleteThread('<c:url value="/sub/${thread.sub.url }/thread/delete?id=${thread.id }"/>', ${thread.id }, '${_csrf.token }');">Delete</a>
+					&nbsp;
+					<a class="link text-decoration-none" 
+					href="<c:url value="/sub/${thread.sub.url }/thread/edit?id=${thread.id }"/>">Edit</a>&nbsp;
+				</security:authorize>
+				<security:authorize var="authenticated" access="isAuthenticated()"/>
+				<c:choose>
+					<c:when test="${authenticated }">
+						<a class="link-primary text-decoration-none" id="commentHref" href="javascript:void 0;" onclick="commentForm('${thread.id }', '${_csrf.token }')">Comment</a>
+					</c:when>
+					<c:otherwise>
+						<a class="link-primary text-decoration-none" id="commentHref" href="<c:url value="/login"/>">Comment</a>
+					</c:otherwise>
+				</c:choose>
+				<div id="commentDiv"></div><br/>
+			</div><br/><br/>
 		
 			<c:forEach items="${comments.content }" var="c">
 				<div class="container pb-3 border-bottom border-dark">

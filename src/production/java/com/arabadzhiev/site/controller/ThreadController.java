@@ -150,6 +150,9 @@ public class ThreadController {
 	public ModelAndView postComment(Map<String, Object> model, @Param("id") long id,
 			@PathVariable("subUrl") String subUrl,
 			@Valid CommentForm commentForm, Errors errors) {
+		if(!userService.exists(SecurityContextHolder.getContext().getAuthentication().getName())){
+			return new ModelAndView(new RedirectView("/login", true));
+		}
 		model.put("subUrl", subUrl);
 		model.put("subName", subService.getSub(subUrl).getName());
 		model.put("searchForm", new SearchForm());

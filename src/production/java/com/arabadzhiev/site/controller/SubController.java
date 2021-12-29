@@ -3,6 +3,7 @@ package com.arabadzhiev.site.controller;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.arabadzhiev.site.controller.SearchController.SearchForm;
 import com.arabadzhiev.site.entity.Sub;
+import com.arabadzhiev.site.entity.Thread;
 import com.arabadzhiev.site.service.SubService;
 import com.arabadzhiev.site.service.ThreadService;
 import com.arabadzhiev.site.service.UserService;
@@ -43,7 +45,10 @@ public class SubController {
 	public ModelAndView listThreads(Map<String, Object> model, @PathVariable("subUrl") String subUrl, 
 			@PageableDefault(size = 20) Pageable pageable) {
 		Sub sub = subService.getSub(subUrl);
-		model.put("threads", threadService.getBySub(sub, pageable));
+		Page<Thread> threads = threadService.getBySub(sub, pageable);
+		if(threads.getTotalElements() > 0) {
+			model.put("threads", threads);
+		}
 		model.put("subUrl", subUrl);
 		model.put("subName", sub.getName());
 		model.put("usersOnline", sessionRegistry.getAllPrincipals().size());

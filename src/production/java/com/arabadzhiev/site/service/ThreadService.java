@@ -13,10 +13,10 @@ import com.arabadzhiev.site.entity.User;
 
 public interface ThreadService {
 	
-	
+	@PreAuthorize("isAuthenticated()")
 	void createThread(@P("thread")Thread thread);
 	@PreAuthorize("#thread.user.username == authentication.name or hasAuthority('ADMIN')")
-	void updateThread(Thread thread);
+	void updateThread(@P("thread")Thread thread);
 	Thread getThread(long id);
 	List<Thread> getThreadsForSub(String subUrl);
 	List<Thread> getAll();
