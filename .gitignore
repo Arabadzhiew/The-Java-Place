@@ -6,3 +6,6 @@ build/
 
 #Maven
 target/
+
+#MacOS
+.DS_Store

@@ -66,7 +66,7 @@ public class DefaultEmailService implements EmailService{
 					+ "						<tr>\n"
 					+ "							<td style=\"padding:30px; background:#ee4c50;\">\n"
 					+ "								<p style=\"margin:0; font-size:14px; line-height: 16px; font-family:Arial, sans-serif; color:#ffffff;\">\n"
-					+ "									&reg; Petar Arabadzhiev, Plovdiv Bulgaria 2021<br/>\n"
+					+ "									&#169; Petar Arabadzhiev, Plovdiv Bulgaria 2021<br/>\n"
 					+ "									<a style=\"color:#ffffff;\" href=\"https://github.com/Arabadzhiew\">GitHub</a>\n"
 					+ "								</p>\n"
 					+ "							</td>\n"

@@ -96,8 +96,13 @@ public class AuthenticaitonController {
 		return new ModelAndView(new RedirectView("/", true));
 	}
 	
+	@RequestMapping(value = "recovery", method = RequestMethod.GET)
+	public RedirectView generateRecoveryKey() {
+		return new RedirectView("/", true);
+	}
+	
 	@RequestMapping(value = "recovery", method = RequestMethod.POST)
-	public RedirectView passwordRecovery(Map<String, Object> model, RedirectAttributes redirectAttributes, 
+	public RedirectView generateRecoveryKey(Map<String, Object> model, RedirectAttributes redirectAttributes, 
 			@Valid RecoveryForm recoveryForm, Errors errors) {
 		if(!errors.hasErrors()) {
 			userService.generateRecoveryKey(recoveryForm.getEmail());

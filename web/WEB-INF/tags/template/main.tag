@@ -75,5 +75,6 @@
 			</c:choose>
 		</div><br/>
 		<jsp:doBody/>
+		<template:footer/>
 	</body>
 </html>

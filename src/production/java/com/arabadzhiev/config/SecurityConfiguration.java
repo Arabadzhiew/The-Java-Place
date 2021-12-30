@@ -82,7 +82,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity security) throws Exception{
 		security
-			.authorizeRequests()
+			.requiresChannel().antMatchers("/**").requiresSecure()
+			.and().authorizeRequests()
 				.antMatchers("/sub/*/thread/create").authenticated()
 				.antMatchers("/sub/*/thread/edit").authenticated()
 				.antMatchers("/signup").anonymous()
@@ -100,8 +101,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.logoutUrl("/logout").logoutSuccessHandler(this.logoutSuccessHandler())
 				.invalidateHttpSession(true).deleteCookies("JSESSIONID")
 				.permitAll()
-			.and()
-				.requiresChannel().antMatchers("/**").requiresSecure()
+			
 			.and().sessionManagement()
 				.sessionFixation().changeSessionId()
 				.maximumSessions(20).maxSessionsPreventsLogin(true)

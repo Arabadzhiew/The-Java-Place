@@ -12,16 +12,19 @@
 		<script src="<c:url value="/resources/js/signupAjax.js"/>"></script>
 		
 	</head>
-	<body class="container bg-light bg-gradient p-5">
-		<div class="row px-5">
-			<div class="col-lg p-5">
-				<img alt="The Java Place" src="<c:url value="/resources/images/tjpLogo.png"/>"
-				width="200" height="110"/>
-				<h2 class="display-4">The place for everything Java related</h2>
-			</div>
-			<div class="col-lg p-5">
-				<jsp:doBody/>
+	<body class="bg-light bg-gradient">
+		<div class="container p-5">
+			<div class="row px-5">
+				<div class="col-lg p-5">
+					<img alt="The Java Place" src="<c:url value="/resources/images/tjpLogo.png"/>"
+					width="200" height="110"/>
+					<h2 class="display-4">The place for everything Java related</h2>
+				</div>
+				<div class="col-lg p-5">
+					<jsp:doBody/>
+				</div>
 			</div>
 		</div>
+		<template:footer/>
 	</body>
 </html>

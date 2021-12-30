@@ -28,8 +28,8 @@
 					<form:form class="form-control" modelAttribute="recoveryForm" method="post"
 					action="/tjp/recovery">
 						<div class="modal-body">
-							<h5>Please enter the email you are registered with,
-							 so we can send you a recovery email.
+							<h5>Please enter the email address you are registered with,
+							 so we can send you a recovery message.
 							</h5><br/>
 							<form:input class="form-control" path="email" placeholder="E-mail"/>
 							<c:choose>

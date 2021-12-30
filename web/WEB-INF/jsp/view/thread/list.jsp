@@ -1,4 +1,5 @@
 <template:main title="${subName } :: Threads">
+	<security:authorize var="authenticated" access="isAuthenticated()"/>
 	<c:choose>
 		<c:when test="${threads != null }">
 			<div align="center">
@@ -27,18 +28,26 @@
 							</tr>
 						</c:forEach>
 					</table>
-					<security:authorize access="isAuthenticated()">
+					<c:if test="${authenticated }">
 						<a class="btn btn-outline-secondary w-100" href="<c:url value="/sub/${subUrl }/thread/create"/>">Create thread</a><br/><br/>
-					</security:authorize>
+					</c:if>
 				</div>
 			</div>
 		</c:when>
 		<c:otherwise>
-			<security:authorize access="isAuthenticated()">
+			<div align="center">
+				<h2 class="display-2"><c:out value="${subName }"/></h2><br/>
 				<div class="p-5">
-					<a class="btn btn-outline-success w-100" href="<c:url value="/sub/${subUrl }/thread/create"/>">Create the first thread</a><br/><br/>
+					<c:choose>
+						<c:when test="${authenticated }">
+							<a class="btn btn-outline-success w-100" href="<c:url value="/sub/${subUrl }/thread/create"/>">Create the first thread</a><br/><br/>
+						</c:when>
+						<c:otherwise>
+							<i class="text-muted">This sub is new and currently doesn't have any threads. Sign in and create the first!</i>
+						</c:otherwise>
+					</c:choose>
 				</div>
-			</security:authorize>
+			</div>
 		</c:otherwise>
 	</c:choose>
 	<div class="pt-3" align="center">
