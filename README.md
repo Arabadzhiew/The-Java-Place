@@ -1,6 +1,5 @@
-
 # TheJavaPlace
-The place fore everything Java related.
+
 
 ## The goal
 This web application was created with one single goal in mind - to be a place where you can go to and get any of your questions, regarding Java and related technologies answered.
@@ -53,7 +52,8 @@ If you have forgotten you password, don't worry. We have also got you covered. F
 
 ## This application was build using:
 
-Backend:
+Back end:
+
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
 
 The server side code of this application was written in Java JDK 16, utilising the Model View Controller and Controller Service Repository design patterns and the following Spring projects:
@@ -62,6 +62,7 @@ The server side code of this application was written in Java JDK 16, utilising t
 - Spring Security;
 
 Database:
+
 ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
 
 A single MySQL database with 5 tables inside of it with different relationships between each other is being used. It's full text searching capabilities are being used in the searching functionality of the application. 
@@ -71,4 +72,6 @@ A single MySQL database with 5 tables inside of it with different relationships 
 ![](https://i.imgur.com/BfbdpSV.png)
 
 
+Frontend:
 
+`Java Server Pages (JSP)` are being used extensively in the client side of the application, with a pinch of `JavaScript` DOM manipulation and its `XMLHttpRequest` object. `Bootstrap v5.0` is also being used extensively in order to give the web app a clean and responsive design. 
