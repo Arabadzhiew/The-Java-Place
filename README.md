@@ -72,6 +72,6 @@ A single MySQL database with 5 tables inside of it with different relationships 
 ![](https://i.imgur.com/BfbdpSV.png)
 
 
-Frontend:
+Front end:
 
 `Java Server Pages (JSP)` are being used extensively in the client side of the application, with a pinch of `JavaScript` DOM manipulation and its `XMLHttpRequest` object. `Bootstrap v5.0` is also being used extensively in order to give the web app a clean and responsive design. 
