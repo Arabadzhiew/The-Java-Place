@@ -1,6 +1,5 @@
 # TheJavaPlace
 
-
 ## The goal
 This web application was created with one single goal in mind - to be a place where you can go to and get any of your questions, regarding Java and related technologies answered.
 
@@ -58,7 +57,7 @@ Back end:
 
 The server side code of this application was written in Java JDK 16, utilising the Model View Controller and Controller Service Repository design patterns and the following Spring projects:
 - Spring MVC;
-- Spring Data JPA - With Hibernate as the implementation;
+- Spring Data JPA - With `Hibernate` as the implementation;
 - Spring Security;
 
 Database:
