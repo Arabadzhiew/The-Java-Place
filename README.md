@@ -1,4 +1,5 @@
 
+
 # TheJavaPlace
 
   
@@ -22,15 +23,10 @@ This web application was created with one single goal in mind - to be a place wh
 ```
 
 <Resource name="jdbc/TheJavaPlace" type="javax.sql.DataSource"
-
 maxActive="20" maxIdle="5" maxWait="10000"
-
 username="tomcatUser" password="insertYourPasswordHere"
-
 driverClassName="com.mysql.jdbc.Driver"
-
 defaultTransactionIsolation="READ_COMMITTED"
-
 url="jdbc:mysql://localhost/TheJavaPlace"/>
 
 ```
@@ -40,13 +36,9 @@ url="jdbc:mysql://localhost/TheJavaPlace"/>
 ```
 
 <Connector SSLEnabled="true" port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol" scheme="https" secure="true">
-
-<SSLHostConfig>
-
-<Certificate certificateKeystoreFile="/directory/to/your/ssl/certificate" certificateKeystorePassword="insertPasswordHere" type="RSA"/>
-
-</SSLHostConfig>
-
+	<SSLHostConfig>
+		<Certificate certificateKeystoreFile="/directory/to/your/ssl/certificate" certificateKeystorePassword="insertPasswordHere" type="RSA"/>
+	</SSLHostConfig>
 </Connector>
 
 ```
@@ -95,7 +87,7 @@ Now that you are a part of TheJavaPlace, you can create read update and delete t
 
   
 
-If you have forgotten your password, don't worry. We've got you covered. From the login page, go on to the `Forgot your password?` tab, enter your email and click send. A recovery message with instructions will be sent to the email address you enetered, if there is a user registered with it.
+If you have forgotten your password, don't worry. We've got you covered. From the login page, go on to the `Forgot your password?` tab, enter your email and click send. A recovery message with instructions will be sent to the email address you entered, if there is a user registered with it.
 
   
 
